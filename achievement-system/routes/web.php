@@ -5,13 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 
 use App\Http\Controllers\LogoutController;
+
 use App\Http\Controllers\RegisterController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome')->name('welcome');
 
-// User added
 Route::view('/dashboard', 'dashboard')->name('dashboard')->middleware('auth');
 
 Route::view('/login', 'login')->name('login');

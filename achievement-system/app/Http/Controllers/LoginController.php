@@ -15,38 +15,26 @@ class LoginController extends Controller
      * Handle an authentication attempt.
 
      */
-
     public function __invoke(Request $request): RedirectResponse
-
     {
-
         $credentials = $request->validate([
 
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'max:255'],
 
-            'password' => ['required'],
-
+            'password' => ['required', 'min:8'],
         ]);
-
- 
 
         if (Auth::attempt($credentials)) {
 
             $request->session()->regenerate();
 
- 
-
             return redirect()->intended('dashboard');
-
         }
-
- 
 
         return back()->withErrors([
 
             'email' => 'The provided credentials do not match our records.',
 
         ])->onlyInput('email');
-
     }
 }

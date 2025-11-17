@@ -8,23 +8,27 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Hash;
+
 class RegisterController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $userData = $request->validate([
+        $validated = $request->validate([
 
-            'name' => ['required', 'string'],
+            'name' => ['required', 'string', 'max:255'],
 
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'unique:users', 'max:255'],
 
-            'password' => ['required'],
+            'password' => ['required', 'min:8'],
 
         ]);
 
-        $userData['password'] = bcrypt($userData['password']);
-
-        $user = User::create($userData);
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+        ]);
 
         Auth::login($user);
 

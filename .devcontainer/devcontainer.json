@@ -9,7 +9,7 @@
 		"ghcr.io/devcontainers/features/node:1": {}
 	},
 	"onCreateCommand": "/bin/bash -c \"$(curl -fsSL https://php.new/install/linux/8.4)\"",
-	"postStartCommand": "docker compose up -d && exit",
+	"postStartCommand": "docker compose up -d",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
