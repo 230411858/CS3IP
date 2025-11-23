@@ -8,9 +8,8 @@
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
 		"ghcr.io/devcontainers/features/node:1": {}
 	},
-	"onCreateCommand": "/bin/bash -c \"$(curl -fsSL https://php.new/install/linux/8.4)\"",
-	"postStartCommand": "docker compose up -d",
-
+	"onCreateCommand": "/bin/bash -c \"$(curl -fsSL https://php.new/install/linux/8.4)\" && sudo apt-get update && sudo apt-get install mariadb-client -y",
+	"postStartCommand": "docker compose up -d && echo In the achievement-system folder, run composer install, npm install, npm run build, php artisan key:generate and php artisan config:cache, php artisan migrate and php artisan db:seed after you create the container for the first time",
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 

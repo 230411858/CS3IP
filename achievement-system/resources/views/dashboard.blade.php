@@ -5,7 +5,7 @@
         Welcome {{ Auth::user()->name }}
     </h1>
     <br>
-    testing that this works
+    Account type? {{ Auth::user()->type }}
     <br>
     
 @endsection
