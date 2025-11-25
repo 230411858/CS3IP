@@ -1,4 +1,7 @@
 @extends('layouts.default')
+@section('css')
+    <link rel="stylesheet" href="css/login_register.css">
+@endsection
 @section('content')
 <div class="form-card">
     <h2>
@@ -20,8 +23,8 @@
                 </ul>
             </div>
         @endif
-        <input type="email" name="email" placeholder="Email address">
-        <input type="password" name="password" placeholder="Password">
+        <input type="email" name="email" placeholder="Email address" required maxlength="255">
+        <input type="password" name="password" placeholder="Password" required minlength="8">
         <button type="submit">Submit</button>
     </form>
     <h4>
@@ -29,9 +32,3 @@
     </h4>
 </div>
 @endsection
-<style>
-    main
-    {
-        align-content: center;
-    }
-</style>

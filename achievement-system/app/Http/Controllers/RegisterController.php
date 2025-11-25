@@ -16,16 +16,20 @@ class RegisterController extends Controller
     {
         $validated = $request->validate([
 
-            'name' => ['required', 'string', 'max:255'],
+            'name' => 'required|string|max:255|regex:[a-zA-z][a-zA-Z]*\s[a-zA-Z][a-zA-Z]*',
 
-            'email' => ['required', 'email', 'unique:users', 'max:255'],
+            'email' => 'required|email|unique:users|max:255',
 
-            'password' => ['required', 'min:8'],
+            'password' => 'required|min:8',
 
         ]);
 
+        $formatted_name = explode(" ", $validated['name']);
+
+        $formatted_name = strtoupper($formatted_name[0][0]) . strtolower(substr($formatted_name[0], 1)) . " " . strtoupper($formatted_name[1][0]) . strtolower(substr($formatted_name[1], 1));
+
         $user = User::create([
-            'name' => $validated['name'],
+            'name' => $formatted_name,
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'type' => 'student',

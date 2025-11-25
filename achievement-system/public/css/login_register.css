@@ -1,0 +1,52 @@
+/* Styling for the registration and login form cards */
+main
+{
+    align-content: center;
+}
+.form-card
+{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin: auto;
+    text-align: center;
+    border-style: solid;
+    border-color: darkgrey;
+    padding: 50px;  
+    min-height: 60vh;
+    min-width: 50vh;
+}
+.form-card form
+{
+    /* Makes form inputs vertical */
+    display: flex;
+    flex-direction: column;
+    margin-top: 5vh;
+}
+.form-card form input
+{
+    /* Gets rid of the top, right and left borders from the input fields, leaving only the bottom line */
+    border-style: none none solid none;
+    padding: 20px;
+    margin-bottom: 5vh;
+}
+.form-card form button
+{
+    /* Makes the button round */
+    border-radius: 15px;
+    padding: 10px;
+    margin: 10px;
+}
+input:valid
+{
+    border-color: green;
+}
+input:invalid
+{
+    border-color: red;
+}
+.error
+{
+    color: red;
+    list-style: none;
+}

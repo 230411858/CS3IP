@@ -8,16 +8,54 @@ use App\Http\Controllers\LogoutController;
 
 use App\Http\Controllers\RegisterController;
 
-Route::view('/', 'welcome')->name('welcome');
+use App\Http\Controllers\UserController;
 
-Route::view('/dashboard', 'dashboard')->name('dashboard')->middleware('auth');
+use App\Http\Middleware\EnsureUserHasType;
 
-Route::view('/login', 'login')->name('login')->middleware('guest');
+use App\Models\User;
 
-Route::post('/login', LoginController::class)->name('login.attempt')->middleware('guest');
+// Unauthenticated routes
 
-Route::view('/register', 'register')->name('register')->middleware('guest');
+Route::middleware('guest')->group(function()
+{
+    Route::view('/', 'welcome')->name('welcome');
 
-Route::post('/register', RegisterController::class)->name('register.attempt')->middleware('guest');
+    Route::view('/login', 'login')->name('login');
 
-Route::post('/logout', LogoutController::class)->name('logout')->middleware('auth');
+    Route::post('/login', LoginController::class)->name('login.attempt');
+
+    Route::view('/register', 'register')->name('register');
+
+    Route::post('/register', RegisterController::class)->name('register.attempt');
+});
+
+// Authenticated routes
+
+Route::middleware('auth')->group(function()
+{
+    Route::post('/logout', LogoutController::class)->name('logout');
+
+    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
+
+    // Admin routes
+
+    Route::middleware(EnsureUserHasType::class.':admin')->group(function()
+    {
+
+        Route::view('/admin/users', [UserController::class, 'show'])->name('user.show');
+
+        Route::view('/admin/user/{id}', [UserController::class, 'show'])->name('user.show');
+
+        Route::post('/admin/user/{id}/update/email', [UserController::class, 'updateEmail'])->name('update.email');
+
+        Route::post('/admin/user/{id}/update/password', [UserController::class, 'updatePassword'])->name('update.password');
+    });
+
+    // Teacher routes
+
+    Route::middleware(EnsureUserHasType::class.':teacher')->group(function()
+    {
+
+    });
+
+});

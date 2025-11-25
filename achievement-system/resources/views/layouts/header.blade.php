@@ -7,6 +7,8 @@
         <title>
                 Achievement System
         </title>
+        <link rel="stylesheet" href="{{ asset('css/default.css') }}">
+        @yield('css')
     </head>
     <body>
         <header>
@@ -39,53 +41,3 @@
             </ul>
         </header>
         <main>
-<style>
-    header
-    {
-        display: flex;
-        /* Stops the header links from taking up the entire width of the page */
-        width: fit-content;
-        /* Makes the header items horizontal */
-        flex-direction: row;
-        text-align: center;
-        justify-content: center;
-        align-items: center;
-        margin: auto;
-        gap: 75vw;
-    }
-    header li
-    {
-        /* Makes the header links horizontal */
-        float: left;
-        /* Gets rid of the dot at the start of each list element */
-        list-style: none;
-        border-style: solid;
-    }
-    header li:hover
-    {
-        color: darkgrey;
-    }
-    header li button
-    {
-        /* Styles the logout button so it looks consistent with the links */ 
-        border-style: none;
-        background: none;
-        padding: 0px 5px;
-        cursor: pointer;
-        font-size: 15px;
-    }
-    header li button:hover
-    {
-        color: darkgrey;
-    }
-    header a
-    {
-        color: black;
-        text-decoration: none;
-        padding: 10px;
-    }
-    header a:hover
-    {
-        color: darkgrey;
-    }
-</style>
