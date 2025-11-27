@@ -18,52 +18,52 @@ class AdminController extends Controller
 
     function edit(Request $request)
     {
-        $user = User::findOrFail($request->id);
+        $user = User::find($request->id);
 
-        if (!empty($request->name))
+        $validated = $request->validate([
+
+            'name' => 'nullable|string|max:255|regex:/[a-zA-Z](\s?[a-zA-Z])*/',
+
+            'email' => 'nullable|email|unique:users|max:255',
+
+            'password' => 'nullable|min:8',
+
+            'type' => 'nullable|in:teacher,student',
+
+        ]);
+
+        if (!empty($raw_name = $validated['name']))
         {
-            $validated = $request->validate([
 
-            'name' => 'required|string|max:255|regex:/[a-zA-Z](\s?[a-zA-Z])*/',
+            $raw_name = trim($raw_name);
 
-            ]);
+            $individual_names = explode(" ", $raw_name);
 
-            $full_name = trim($validated['name']);
-
-            $individual_names = explode(" ", $full_name);
-
-            $formatted_full_name = "";
+            $formatted_name = "";
 
             foreach ($individual_names as $name)
             {
-                $formatted_full_name = $formatted_full_name . ucfirst(strtolower($name)) . " ";
+                $formatted_name = $formatted_name . ucfirst(strtolower($name)) . " ";
             }
 
-            trim($formatted_full_name);
+            trim($formatted_name);
 
-            $user->name = $formatted_full_name;
+            $user->name = $formatted_name;
         }
 
-        if (!empty($request->email))
+        if (!empty($email = $validated['email']))
         {
-            $validated = $request->validate([
-
-            'email' => 'required|email|unique:users|max:255',
-
-            ]);
-
-            $user->email = $validated['email'];
+            $user->email = $email;
         }
 
-        if (!empty($request->password))
+        if (!empty($password = $validated['password']))
         {
-            $validated = $request->validate([
+            $user->password = Hash::make($password);
+        }
 
-                'password' => 'required|min:8',
-
-            ]);
-
-            $user->password = Hash::make($validated['password']);
+        if (!empty($type = $validated['type']))
+        {
+            $user->type = $type;
         }
 
         $user->save();

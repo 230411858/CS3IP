@@ -31,6 +31,12 @@
     <p>New password</p>
     <input type="password" name="password" placeholder="Unchanged">
     <br>
+    <label for="type">New user type</label>
+    <select id="type" name="type">
+        <option value="" selected>Unchanged</option>
+        <option value="teacher">Teacher</option>
+        <option value="student">Student</option>
+    </select>
     <button type="submit">Save</button>
 </form>
 @endsection
