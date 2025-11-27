@@ -15,7 +15,7 @@ class EnsureUserHasType
      */
     public function handle(Request $request, Closure $next, string $type): Response
     {
-        if ($request->user()->type === $type)
+        if ($request->user()->type === $type || $request->user()->type === 'admin')
         {
             return $next($request);
         }

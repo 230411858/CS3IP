@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\LoginController;
@@ -15,7 +17,6 @@ use App\Http\Middleware\EnsureUserHasType;
 use App\Models\User;
 
 // Unauthenticated routes
-
 Route::middleware('guest')->group(function()
 {
     Route::view('/', 'welcome')->name('welcome');
@@ -30,7 +31,6 @@ Route::middleware('guest')->group(function()
 });
 
 // Authenticated routes
-
 Route::middleware('auth')->group(function()
 {
     Route::post('/logout', LogoutController::class)->name('logout');
@@ -38,10 +38,8 @@ Route::middleware('auth')->group(function()
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
 
     // Admin routes
-
     Route::middleware(EnsureUserHasType::class.':admin')->group(function()
     {
-
         Route::view('/admin/users', [UserController::class, 'show'])->name('user.show');
 
         Route::view('/admin/user/{id}', [UserController::class, 'show'])->name('user.show');
@@ -49,10 +47,13 @@ Route::middleware('auth')->group(function()
         Route::post('/admin/user/{id}/update/email', [UserController::class, 'updateEmail'])->name('update.email');
 
         Route::post('/admin/user/{id}/update/password', [UserController::class, 'updatePassword'])->name('update.password');
+
+        Route::get('/edit/{id}', [AdminController::class, 'showEdit'])->name('admin.edit');
+
+        Route::post('/edit', [AdminController::class, 'edit'])->name('edit.attempt');
     });
 
     // Teacher routes
-
     Route::middleware(EnsureUserHasType::class.':teacher')->group(function()
     {
 

@@ -45,8 +45,3 @@ input:invalid
 {
     border-color: red;
 }
-.error
-{
-    color: red;
-    list-style: none;
-}

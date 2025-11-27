@@ -28,7 +28,7 @@
                 </ul>
             </div>
         @endif
-        <input type="text" name="name" placeholder="Full name" value="{{ old('name') }}" required maxlength="255" pattern="[a-zA-Z][a-zA-Z]*\s[a-zA-Z][a-zA-Z]*">
+        <input type="text" name="name" placeholder="Full name" value="{{ old('name') }}" required maxlength="255" pattern="[a-zA-Z](\s?[a-zA-Z])*">
         <input type="email" name="email" placeholder="Email address" value="{{ old('email') }}" required maxlength="255">
         <input type="password" name="password" placeholder="Password" required minlength="8">
         <button type="submit">Submit</button>

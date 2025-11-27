@@ -22,7 +22,7 @@ class UserController extends Controller
             case 'teacher':
                 return view("teacher.dashboard", ['students' => User::where('type', '=', 'student')->sortBy('name')]);
                 break;
-            default:
+            case 'student':
                 return view("student.dashboard");
                 break;
         }

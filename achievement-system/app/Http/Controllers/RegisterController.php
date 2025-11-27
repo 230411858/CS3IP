@@ -16,7 +16,7 @@ class RegisterController extends Controller
     {
         $validated = $request->validate([
 
-            'name' => 'required|string|max:255|regex:[a-zA-z][a-zA-Z]*\s[a-zA-Z][a-zA-Z]*',
+            'name' => 'required|string|max:255|regex:/[a-zA-Z](\s?[a-zA-Z])*/',
 
             'email' => 'required|email|unique:users|max:255',
 
@@ -24,9 +24,18 @@ class RegisterController extends Controller
 
         ]);
 
-        $formatted_name = explode(" ", $validated['name']);
+        $name = trim($validated['name']);
 
-        $formatted_name = strtoupper($formatted_name[0][0]) . strtolower(substr($formatted_name[0], 1)) . " " . strtoupper($formatted_name[1][0]) . strtolower(substr($formatted_name[1], 1));
+        $names = explode(" ", $name);
+
+        $formatted_name = "";
+
+        foreach ($names as $name)
+        {
+            $formatted_name = $formatted_name . ucfirst(strtolower($name)) . " ";
+        }
+
+        trim($formatted_name);
 
         $user = User::create([
             'name' => $formatted_name,
