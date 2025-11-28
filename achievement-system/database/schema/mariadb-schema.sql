@@ -101,6 +101,22 @@ CREATE TABLE `migrations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `parent_has_children`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `parent_has_children` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `parent` bigint(20) unsigned NOT NULL,
+  `child` bigint(20) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `parent_has_children_parent_foreign` (`parent`),
+  KEY `parent_has_children_child_foreign` (`child`),
+  CONSTRAINT `parent_has_children_child_foreign` FOREIGN KEY (`child`) REFERENCES `users` (`id`),
+  CONSTRAINT `parent_has_children_parent_foreign` FOREIGN KEY (`parent`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `password_reset_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -135,7 +151,7 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
-  `type` enum('admin','teacher','student') NOT NULL DEFAULT 'student',
+  `type` enum('admin','teacher','parent','student') NOT NULL DEFAULT 'student',
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -151,8 +167,9 @@ CREATE TABLE `users` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 /*M!999999\- enable the sandbox mode */ 
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (5,'0001_01_01_000000_create_users_table',1);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (6,'0001_01_01_000001_create_cache_table',1);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (7,'0001_01_01_000002_create_jobs_table',1);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (8,'2025_11_23_202313_add_type_to_users',1);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (9,'2025_11_28_030721_create_achievements_table',2);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (10,'0001_01_01_000000_create_users_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (11,'0001_01_01_000001_create_cache_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (12,'0001_01_01_000002_create_jobs_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (13,'2025_11_23_202313_add_type_to_users',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (14,'2025_11_28_030721_create_achievements_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (15,'2025_11_28_042211_create_parent_has_children_table',1);
