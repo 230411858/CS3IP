@@ -5,6 +5,25 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+DROP TABLE IF EXISTS `achievements`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `achievements` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `type` enum('badge','medal','trophy') NOT NULL DEFAULT 'badge',
+  `title` varchar(255) NOT NULL,
+  `description` varchar(1023) DEFAULT NULL,
+  `awarded_to` bigint(20) unsigned NOT NULL,
+  `awarded_by` bigint(20) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `achievements_awarded_to_foreign` (`awarded_to`),
+  KEY `achievements_awarded_by_foreign` (`awarded_by`),
+  CONSTRAINT `achievements_awarded_by_foreign` FOREIGN KEY (`awarded_by`) REFERENCES `users` (`id`),
+  CONSTRAINT `achievements_awarded_to_foreign` FOREIGN KEY (`awarded_to`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `cache`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -136,3 +155,4 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (5,'0001_01_01_0000
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (6,'0001_01_01_000001_create_cache_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (7,'0001_01_01_000002_create_jobs_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (8,'2025_11_23_202313_add_type_to_users',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (9,'2025_11_28_030721_create_achievements_table',2);

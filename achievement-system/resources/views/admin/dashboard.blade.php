@@ -1,8 +1,4 @@
-@extends('layouts.default')
-
-@section('css')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
-@endsection
+@extends('layouts.dashboard')
 
 @section('content')
     
@@ -15,6 +11,9 @@
     <table>
         <tr>
             <th>
+                ID
+            </th>
+            <th>
                 Name
             </th>
             <th>
@@ -26,6 +25,9 @@
         </tr>
         @foreach ($users as $user)
         <tr>
+            <td>
+                {{ $user->id }}
+            </td>
             <td>
                 {{ $user->name }}
             </td>

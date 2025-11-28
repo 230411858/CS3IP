@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-            $table->enum('type', ['admin', 'teacher', 'parent', 'student'])->default('student')->after('password');
+        Schema::create('parent_has_children', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('parent')->constrained(table:'users', column:'id');
+            $table->foreignId('child')->constrained(table:'users', column:'id');
+            $table->timestamps();
         });
     }
 
@@ -22,9 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-            $table->dropColumn('type');
-        });
+        Schema::dropIfExists('parent_has_children');
     }
 };

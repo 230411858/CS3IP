@@ -15,7 +15,7 @@
         Register a new account
     </h5>
 
-    <form method="POST" action="/register">
+    <form method="POST" action="{{ route('register.attempt') }}">
         @csrf
         @if ($errors->any())
             <div>

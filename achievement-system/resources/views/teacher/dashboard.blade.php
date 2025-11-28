@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.dashboard')
 @section('content')
     
     <h1>
@@ -8,10 +8,34 @@
     Account type? {{ Auth::user()->type }}
     <br>
     <ul>
-    @foreach ($students as $student) 
-        <li>
-            {{ $student->name }}
-        </li>
-    @endforeach
+        <table>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Email
+            </th>
+        </tr>
+        @foreach ($students as $student)
+        <tr>
+            <td>
+                {{ $student->id }}
+            </td>
+            <td>
+                {{ $student->name }}
+            </td>
+            <td>
+                {{ $student->email }}
+            </td>
+            <td class="award">
+                <a href="{{ route('teacher.award', $student->id) }}">Award</a>
+            </td>
+        </tr>
+        @endforeach
+    </table>
     </ul>
 @endsection

@@ -1,4 +1,9 @@
 services:
+
+  achievement_system:
+    build: .
+    ports:
+      - 8080:80
   db:
     image: mariadb
     restart: always

@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AdminController;
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TeacherController;
+
+use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\LoginController;
 
@@ -10,9 +12,9 @@ use App\Http\Controllers\LogoutController;
 
 use App\Http\Controllers\RegisterController;
 
-use App\Http\Controllers\UserController;
-
 use App\Http\Middleware\EnsureUserHasType;
+
+use Illuminate\Support\Facades\Route;
 
 use App\Models\User;
 
@@ -56,7 +58,9 @@ Route::middleware('auth')->group(function()
     // Teacher routes
     Route::middleware(EnsureUserHasType::class.':teacher')->group(function()
     {
+        Route::get('/award/{id}', [TeacherController::class, 'showAward'])->name('teacher.award');
 
+        Route::post('/award', [TeacherController::class, 'award'])->name('award.attempt');
     });
 
 });

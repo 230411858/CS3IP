@@ -10,13 +10,18 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    function showEdit($id)
+    public function dashboard()
+    {
+        return view("admin.dashboard", ['users' => User::all()->orderByDesc('type')->get()]);
+    }
+
+    public function showEdit(int $id)
     {
         $user = User::findOrFail($id);
         return view('admin.edit', ['user' => $user]);
     }
 
-    function edit(Request $request)
+    public function edit(Request $request)
     {
         $user = User::find($request->id);
 
@@ -28,7 +33,7 @@ class AdminController extends Controller
 
             'password' => 'nullable|min:8',
 
-            'type' => 'nullable|in:teacher,student',
+            'type' => 'nullable|in:teacher,parent,student',
 
         ]);
 
@@ -68,6 +73,6 @@ class AdminController extends Controller
 
         $user->save();
 
-        return back();
+        return back()->with('success', 'Successfully modified user');
     }
 }
