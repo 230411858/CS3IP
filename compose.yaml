@@ -4,9 +4,14 @@ services:
     build: ./achievement-system
     ports:
       - 8000:80
+    depends_on:
+      db:
+        condition: service_started
+        restart: true
 
   db:
     image: mariadb
+    container_name: db
     restart: always
     environment:
       MARIADB_DATABASE: achievement_system
@@ -19,3 +24,7 @@ services:
     restart: always
     ports:
       - 8080:8080
+    depends_on:
+      db:
+        condition: service_started
+        restart: true

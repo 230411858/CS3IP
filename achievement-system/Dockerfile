@@ -23,7 +23,9 @@ WORKDIR /var/www/html
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install project dependencies
-RUN composer install && php artisan migrate:fresh --seed
+RUN composer install 
+
+RUN php artisan migrate:fresh --seed
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
