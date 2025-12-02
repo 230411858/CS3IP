@@ -16,8 +16,7 @@ return new class extends Migration
             $table->enum('type', ['badge', 'medal', 'trophy'])->default('badge');
             $table->string('title');
             $table->string('description', 1023)->nullable();
-            $table->foreignId('awarded_to')->constrained(table:'users', column:'id');
-            $table->foreignId('awarded_by')->constrained(table:'users', column:'id');
+            $table->foreignId('teacher_id')->constrained(table:'teachers', column:'id')->onDelete('cascade');
             $table->timestamps();
         });
     }

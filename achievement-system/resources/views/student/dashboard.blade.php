@@ -19,6 +19,12 @@
             <th>
                 Description
             </th>
+            <th>
+                Awarded by
+            </th>
+            <th>
+                Awarded at
+            </th>
         </tr>
         @foreach ($achievements as $achievement)
         <tr>
@@ -30,6 +36,12 @@
             </td>
             <td>
                 {{ $achievement->description }}
+            </td>
+            <td>
+                {{ $achievement->teacher->name }}
+            </td>
+            <td>
+                {{ $achievement->created_at }}
             </td>
         </tr>
         @endforeach

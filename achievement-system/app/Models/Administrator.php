@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class ParentHasChild extends Model
+class Administrator extends Model
 {
-    /** @use HasFactory<\Database\Factories\ParentHasChildFactory> */
+    /** @use HasFactory<\Database\Factories\AdministratorFactory> */
     use HasFactory;
 
     /**
@@ -16,7 +17,11 @@ class ParentHasChild extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'parent',
-        'child'
+        'user_id'
     ];
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }

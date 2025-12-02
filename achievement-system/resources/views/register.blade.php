@@ -31,6 +31,11 @@
         <input type="text" name="name" placeholder="Full name" value="{{ old('name') }}" required maxlength="255" pattern="[a-zA-Z](\s?[a-zA-Z])*">
         <input type="email" name="email" placeholder="Email address" value="{{ old('email') }}" required maxlength="255">
         <input type="password" name="password" placeholder="Password" required minlength="8">
+        <label for="type">I am a...</label>
+        <select name="type" id="type">
+            <option selected value="student">Student</option>
+            <option value="guardian">Parent/Guardian</option>
+        </select>
         <button type="submit">Submit</button>
     </form>
     

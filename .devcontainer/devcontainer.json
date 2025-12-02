@@ -10,7 +10,7 @@
 	},
 
 	"onCreateCommand": "/bin/bash -c \"$(curl -fsSL https://php.new/install/linux/8.4)\" && sudo apt-get update && sudo apt-get install mariadb-client -y",
-	"postStartCommand": "docker compose up -d && echo In the achievement-system folder, run composer install, npm install, npm run build, php artisan migrate and php artisan db:seed after you create the container for the first time",
+	"postStartCommand": "docker compose up -d",
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 

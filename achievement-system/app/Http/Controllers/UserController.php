@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Achievement;
+use App\Models\Student;
+use App\Models\StudentHasAchievement;
+
 use App\Models\User;
 
 use Illuminate\Support\Facades\Auth;
@@ -17,14 +19,14 @@ class UserController extends Controller
     {
         switch (Auth::user()->type)
         {
-            case 'admin':
+            case 'administrator':
                 return view("admin.dashboard", ['users' => User::all()]);
                 break;
             case 'teacher':
-                return view("teacher.dashboard", ['students' => User::where('type', '=', 'student')->orderBy('name')->get()]);
+                return view("teacher.dashboard", ['students' => Student::with('user')->get()]);
                 break;
             case 'student':
-                return view("student.dashboard", ['achievements' => Achievement::where('awarded_to', '=', Auth::id())->orderByDesc('created_at')->get()]);
+                return view("student.dashboard", ['achievements' => StudentHasAchievement::with('achievement')->where('student_id', '=', Auth::id())->orderByDesc('created_at')->get()]);
                 break;
         }
         abort(404);

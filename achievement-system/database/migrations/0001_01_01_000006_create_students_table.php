@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-            $table->enum('type', ['admin', 'teacher', 'parent', 'student'])->default('student')->after('password');
+        Schema::create('students', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained(table:'users', column:'id')->onUpdate('cascade')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -22,9 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-            $table->dropColumn('type');
-        });
+        Schema::dropIfExists('students');
     }
 };

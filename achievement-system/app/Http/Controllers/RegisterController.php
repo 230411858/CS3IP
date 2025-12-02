@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 
+use App\Models\Student;
+
+use App\Models\Guardian;
+
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +25,8 @@ class RegisterController extends Controller
             'email' => 'required|email|unique:users|max:255',
 
             'password' => 'required|min:8',
+
+            'type' => 'required|in:student,guardian'
 
         ]);
 
@@ -41,8 +47,22 @@ class RegisterController extends Controller
             'name' => $formatted_name,
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'type' => 'student',
+            'type' => $validated['type']
         ]);
+
+        switch ($validated['type'])
+        {
+            case 'student':
+                Student::create([
+                    'user_id' => $user->id
+                ]);
+                break;
+            case 'guardian':
+                Guardian::create([
+                    'user_id' => $user->id
+                ]);
+                break;
+        }
 
         Auth::login($user);
 

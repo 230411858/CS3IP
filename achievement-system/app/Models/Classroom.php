@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Achievement extends Model
+class Classroom extends Model
 {
-    /** @use HasFactory<\Database\Factories\AchievementFactory> */
+    /** @use HasFactory<\Database\Factories\ClassroomFactory> */
     use HasFactory;
 
     /**
@@ -17,13 +17,12 @@ class Achievement extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'type',
-        'title',
-        'description',
+        'name',
+        'year_group',
         'teacher_id'
     ];
 
-    public function user(): HasOne
+    public function teacher(): HasOne
     {
         return $this->hasOne(Teacher::class, 'id', 'teacher_id');
     }

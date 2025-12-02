@@ -23,16 +23,16 @@
         @foreach ($students as $student)
         <tr>
             <td>
-                {{ $student->id }}
+                {{ $student->user->id }}
             </td>
             <td>
-                {{ $student->name }}
+                {{ $student->user->name }}
             </td>
             <td>
-                {{ $student->email }}
+                {{ $student->user->email }}
             </td>
             <td class="award">
-                <a href="{{ route('teacher.award', $student->id) }}">Award</a>
+                <a href="{{ route('teacher.award', $student->user->id) }}">Award</a>
             </td>
         </tr>
         @endforeach
