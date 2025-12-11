@@ -6,11 +6,11 @@
 	"image": "mcr.microsoft.com/devcontainers/base:bullseye",
 	"features": {
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
-		"ghcr.io/devcontainers/features/node:1": {}
+		"ghcr.io/devcontainers/features/node:1": {},
+		"ghcr.io/devcontainers/features/php:1": {},
 	},
 
-	"onCreateCommand": "/bin/bash -c \"$(curl -fsSL https://php.new/install/linux/8.4)\" && sudo apt-get update && sudo apt-get install mariadb-client -y",
-	"postStartCommand": "docker compose up -d --build",
+	"onCreateCommand": "/bin/bash -c \"$(curl -fsSL https://php.new/install/linux/8.4)\" && sudo apt-get update && sudo apt-get install mariadb-client -y && docker compose up -d db adminer && (cd achievement-system && composer install)",
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 

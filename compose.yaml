@@ -2,12 +2,16 @@ services:
 
   achievement_system:
     build: ./achievement-system
+    container_name: achievement_system
+    restart: always
     ports:
       - 8000:80
     depends_on:
       db:
         condition: service_started
         restart: true
+    post_start:
+      - command: php artisan migrate:fresh --seed
 
   db:
     image: mariadb
@@ -21,9 +25,10 @@ services:
 
   adminer:
     image: adminer
+    container_name: adminer
     restart: always
     ports:
-      - 8080:8080
+      - 8001:8080
     depends_on:
       db:
         condition: service_started
