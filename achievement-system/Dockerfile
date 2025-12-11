@@ -1,4 +1,7 @@
-FROM php:8.3-apache
+FROM php:8.4-apache
+
+# Stores the local IPv4 address of the system
+ENV ACHIEVEMENT_SYSTEM_LOCAL_IP=10.0.0.1
 
 # Install dependencies
 RUN apt-get update && apt-get install -y libzip-dev zip mariadb-client
