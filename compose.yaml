@@ -2,9 +2,11 @@ services:
 
   achievement_system:
     build: ./achievement-system
-    image: achievement-system:latest
+    image: hcwy/achievement-system:latest
     container_name: achievement-system
     restart: always
+    environment:
+      - ACHIEVEMENT_SYSTEM_LOCAL_IP=172.17.0.2
     ports:
       - 8000:80
     depends_on:
