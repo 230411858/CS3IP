@@ -3,10 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\UserType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -46,5 +47,25 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function type(): UserType
+    {
+        if (Administrator::where('user_id', $this->id)->exists())
+        {
+            return UserType::Administrator;
+        }
+        else if (Teacher::where('user_id', $this->id)->exists())
+        {
+            return UserType::Teacher;
+        }
+        else if (Guardian::where('user_id', $this->id)->exists())
+        {
+            return UserType::Guardian;
+        }
+        else
+        {
+            return UserType::Student;
+        }
     }
 }

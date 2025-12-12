@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
 
+use app\UserType;
+
 class AdministratorController extends Controller
 {
     public function dashboard()
@@ -75,44 +77,40 @@ class AdministratorController extends Controller
 
         if (!empty($type = $validated['type']))
         {
+            $type = UserType::from($type);
+            // Remove user from table of old type
+            switch($user->type())
+            {
+                case UserType::Teacher:
+                    Teacher::destroy(Teacher::firstWhere('user_id', '=', $user->id)->id);
+                    break;
+                case UserType::Guardian:
+                    Guardian::destroy(Guardian::firstWhere('user_id', '=', $user->id)->id);
+                    break;
+                case UserType::Student:
+                    Student::destroy(Student::firstWhere('user_id', '=', $user->id)->id);
+                    break;
+            }
+
             // Add user to table of new type
             switch($type)
             {
-                case 'teacher':
+                case UserType::Teacher:
                     Teacher::create([
                         'user_id' => $user->id
                     ]);
                     break;
-                case 'guardian':
+                case UserType::Guardian:
                     Guardian::create([
                         'user_id' => $user->id
                     ]);
                     break;
-                case 'student':
+                case UserType::Student:
                     Student::create([
                         'user_id' => $user->id
                     ]);
                     break;
             }
-
-            // Remove user from table of old type
-            switch($user->type)
-            {
-                case 'teacher':
-                    $to_destroy = Teacher::firstWhere('user_id', '=', $user->id)->id;
-                    Teacher::destroy($to_destroy);
-                    break;
-                case 'guardian':
-                    $to_destroy = Guardian::firstWhere('user_id', '=', $user->id)->id;
-                    Guardian::destroy($to_destroy);
-                    break;
-                case 'student':
-                    $to_destroy = Student::firstWhere('user_id', '=', $user->id)->id;
-                    Student::destroy($to_destroy);
-                    break;
-            }
-
-            $user->type = $type;
         }
 
         $user->save();

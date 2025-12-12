@@ -17,27 +17,28 @@
                     Achievement System
                 </a>
             </h1>
-            <ul>
-                @auth
-                    <ul>
-                        <li>
-                            <a href="/dashboard">Home</a> </li>
-                        <li>
-                            <form method="POST" action="/logout">
-                                @csrf
-                                <button type="submit">Logout</button>
-                            </form>
-                        </li>
-                    </ul>
-                @endauth
-                @guest
-                <li>
-                    <a href="/login">Login</a>
-                </li>
-                <li>
-                    <a href="/register">Register</a>
-                </li>
-                @endguest
-            </ul>
+            <nav>
+                <ul>
+                    @auth
+                        <ul>
+                            <li>
+                                <a href="/dashboard">Home</a> </li>
+                            <li>
+                                <form method="POST" action="/logout">
+                                    @csrf
+                                    <button type="submit">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    @endauth
+                    @guest
+                    <li>
+                        <a href="/login">Login</a>
+                    </li>
+                    <li>
+                        <a href="/register">Register</a>
+                    </li>
+                    @endguest
+                </ul>
+            </nav>
         </header>
-        <main>

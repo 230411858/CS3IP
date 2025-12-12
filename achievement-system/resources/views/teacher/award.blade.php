@@ -1,25 +1,7 @@
 @extends('layouts.default')
 
 @section('content')
-@if ($errors->any())
-    <div>
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li class="error">
-                {{ $error }}
-            </li>
-            @endforeach
-        </ul>
-    </div>
-@elseif (session()->has('success'))
-    <div>
-        <ul>
-            <li class="success">
-                {{ session('success') }}
-            </li>
-        </ul>
-    </div>
-@endif
+<a href="{{ route('dashboard') }}"><- Back to dashboard</a>
 <form method="POST" action="{{ route('award.attempt') }}">
     @csrf
     <p>Student ID</p>

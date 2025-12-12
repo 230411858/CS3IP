@@ -14,7 +14,8 @@ use App\Models\Teacher;
 
 use App\Models\Guardian;
 
-use App\Models\Student;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class EnsureUserHasType
 {
@@ -25,52 +26,11 @@ class EnsureUserHasType
      */
     public function handle(Request $request, Closure $next, string $type): Response
     {
-        switch ($type) 
+        $user = User::find(Auth::id());
+        if ($user->type()->value === $type) 
         {
-            case 'admin':
-                try 
-                {
-                    Administrator::where('user_id', $request->user()->id)->firstOrFail();
-                } 
-                catch (\Throwable $th) 
-                {
-                    return back()->withErrors('Unauthorised');
-                }
-                return $next($request);
-
-            case 'teacher':
-                try 
-                {
-                    Teacher::where('user_id', $request->user()->id)->firstOrFail();
-                } 
-                catch (\Throwable $th) 
-                {
-                    return back()->withErrors('Unauthorised');
-                }
-                return $next($request);
-
-            case 'guardian':
-                try 
-                {
-                    Guardian::where('user_id', $request->user()->id)->firstOrFail();
-                } 
-                catch (\Throwable $th) 
-                {
-                    return back()->withErrors('Unauthorised');
-                }
-                return $next($request);
-
-            case 'student':
-                try 
-                {
-                    Student::where('user_id', $request->user()->id)->firstOrFail();
-                } 
-                catch (\Throwable $th) 
-                {
-                    return back()->withErrors('Unauthorised');
-                }
-                return $next($request);
+            return $next($request);
         }
-        return back()->withErrors('Unauthorised');
+        return back()->withErrors('Forbidden');
     }
 }

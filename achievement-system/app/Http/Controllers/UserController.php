@@ -13,36 +13,36 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
 
+use App\UserType;
+
 class UserController extends Controller
 {
     public function dashboard()
     {
-        switch (Auth::user()->type)
+        $user = User::find(Auth::id());
+        switch ($user->type())
         {
-            case 'administrator':
+            case UserType::Administrator:
                 return view("admin.dashboard", ['users' => User::all()]);
-                break;
-            case 'teacher':
+            case UserType::Teacher:
                 return view("teacher.dashboard", ['students' => Student::with('user')->get()]);
-                break;
-            case 'student':
+            case UserType::Guardian:
+                return view("guardian.dashboard", ['students' => Student::with('user')->get()]);
+            case UserType::Student:
                 return view("student.dashboard", ['achievements' => StudentHasAchievement::with('achievement')->where('student_id', '=', Auth::id())->orderByDesc('created_at')->get()]);
-                break;
         }
         abort(404);
     }
     
     public function updateEmail(Request $request)
     {
+        $user = User::find(Auth::id());
         $validated = $request->validate([
             'email' => 'required|email|unique:users|max:255',
         ]);
 
-        $user = Auth::user();
-
         $user->email = $validated['email'];
 
-        /* Ignore syntax error from Intelephense plugin, user does have save method but plugin cannot find it */
         $user->save();
 
         return back(200);
@@ -50,15 +50,14 @@ class UserController extends Controller
 
     public function updatePassword(Request $request)
     {
+        $user = User::find(Auth::id());
+
         $validated = $request->validate([
             'password' => 'required|min:8',
         ]);
 
-        $user = Auth::user();
-
         $user->password = Hash::make($validated['password']);
 
-        /* Ignore syntax error from Intelephense plugin, user does have save method but plugin cannot find it */
         $user->save();
 
         return back(200);

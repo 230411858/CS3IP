@@ -1,13 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    
-    <h1>
-        Welcome {{ Auth::user()->name }}
-    </h1>
-    <br>
-    Account type? {{ Auth::user()->type }}
-    <br>
     <table>
         <tr>
             <th>
@@ -35,10 +28,10 @@
                 {{ $user->email }}
             </td>
             <td>
-                {{ ucfirst($user->type) }}
+                {{ ucfirst($user->type()->value) }}
             </td>
             <td class="edit">
-                <a href="/edit/{{ $user->id }}">Edit</a>
+                <a href="{{ route('admin.edit', $user->id) }}">Edit</a>
             </td>
         </tr>
         @endforeach
