@@ -44,14 +44,6 @@ Route::middleware('auth')->group(function()
     // Admin routes
     Route::middleware(EnsureUserHasType::class.':'.UserType::Administrator->value)->group(function()
     {
-        Route::view('/admin/users', [UserController::class, 'show'])->name('user.show');
-
-        Route::view('/admin/user/{id}', [UserController::class, 'show'])->name('user.show');
-
-        Route::post('/admin/user/{id}/update/email', [UserController::class, 'updateEmail'])->name('update.email');
-
-        Route::post('/admin/user/{id}/update/password', [UserController::class, 'updatePassword'])->name('update.password');
-
         Route::get('/edit/{id}', [AdministratorController::class, 'showEdit'])->name('admin.edit');
 
         Route::post('/edit', [AdministratorController::class, 'edit'])->name('edit.attempt');

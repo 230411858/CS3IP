@@ -1,8 +1,5 @@
 FROM php:8.4-apache
 
-# Stores the local IPv4 address of the system
-ENV ACHIEVEMENT_SYSTEM_LOCAL_IP=10.0.0.1
-
 # Install dependencies
 RUN apt-get update && apt-get install -y libzip-dev zip mariadb-client
 
@@ -21,6 +18,9 @@ COPY . /var/www/html
 
 # Set the working directory
 WORKDIR /var/www/html
+
+# Copy the .env.example file to .env
+COPY .env.example .env
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

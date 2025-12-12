@@ -6,7 +6,14 @@ services:
     container_name: achievement-system
     restart: always
     environment:
-      - ACHIEVEMENT_SYSTEM_LOCAL_IP=172.17.0.2
+    # Available environment variables and their default values
+      - APP_DEBUG=false # Whether debug messages should be displayed (false hides configuration and secrets from end user)
+      - APP_URL=http://localhost # The URL of the application
+      - DB_CONNECTION=mariadb # database you are using, must be one of mariadb, mysql or postgresql
+      - DB_HOST=172.17.0.2 # IP address or hostname of database
+      - DB_PORT=3306 # Port for database
+      - DB_USERNAME=root # Database username
+      - DB_PASSWORD=root # Database password
     ports:
       - 8000:80
     depends_on:
@@ -14,7 +21,9 @@ services:
         condition: service_healthy
         restart: true
     post_start:
-      - command: php artisan migrate:fresh --seed
+      - command: php artisan key:generate 
+      - command: php artisan migrate:refresh --seed 
+      - command: php artisan optimize:clear
 
   db:
     image: mariadb
