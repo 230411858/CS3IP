@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\UserType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -23,7 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'type',
+        'type'
     ];
 
     /**
@@ -49,23 +50,13 @@ class User extends Authenticatable
         ];
     }
 
-    public function type(): UserType
+    public function classrooms(): BelongsToMany
     {
-        if (Administrator::where('user_id', $this->id)->exists())
-        {
-            return UserType::Administrator;
-        }
-        else if (Teacher::where('user_id', $this->id)->exists())
-        {
-            return UserType::Teacher;
-        }
-        else if (Guardian::where('user_id', $this->id)->exists())
-        {
-            return UserType::Guardian;
-        }
-        else
-        {
-            return UserType::Student;
-        }
+        return $this->belongsToMany(Classroom::class, 'user_has_classroom', 'user_id', 'classroom_id');
+    }
+
+    public function achievements(): BelongsToMany
+    {
+        return $this->belongsToMany(Achievement::class, 'student_has_achievement', 'student_id', 'achievement_id');
     }
 }

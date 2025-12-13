@@ -7,11 +7,11 @@
 
 @section('content')
     <h1>
-        Welcome {{ Auth::user()->name }}, you are a{{ preg_match('/^[aeiou]/i', Auth::user()->type()->value[0]) === 1 ? 'n' : '' }} {{ ucfirst(Auth::user()->type()->value) }}
+        Welcome {{ Auth::user()->name }}, you are a{{ preg_match('/^[aeiou]/i', Auth::user()->type[0]) === 1 ? 'n' : '' }} {{ ucfirst(Auth::user()->type) }}
     </h1>
     <br>
-    <section>
     @if ($errors->any())
+        <section>
             <div>
                 <ul>
                     @foreach ($errors->all() as $error)
@@ -21,7 +21,9 @@
                     @endforeach
                 </ul>
             </div>
-        @elseif (session()->has('success'))
+        </section>
+    @elseif (session()->has('success'))
+        <section>
             <div>
                 <ul>
                     <li class="success">
@@ -29,7 +31,7 @@
                     </li>
                 </ul>
             </div>
-        @endif
-    </section>
+        </section>
+    @endif
     @yield('content')
 @overwrite

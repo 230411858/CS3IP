@@ -20,7 +20,7 @@ class ClassroomFactory extends Factory
         return [
             'name' => fake()->colorName(),
             'year_group' => fake()->numberBetween(1, 13),
-            'teacher_id' => Teacher::inRandomOrder()->first()->id
+            'description' => fake()->text()
         ];
     }
 }

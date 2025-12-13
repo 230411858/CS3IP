@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class StudentHasAchievement extends Pivot
+class AchievementUser extends Pivot
 {
-    /** @use HasFactory<\Database\Factories\StudentHasAchievementFactory> */
+    /** @use HasFactory<\Database\Factories\AchievementUserFactory> */
     use HasFactory;
 
     /**
@@ -18,6 +18,6 @@ class StudentHasAchievement extends Pivot
      */
     protected $fillable = [
         'student_id',
-        'classroom_id'
+        'achievement_id'
     ];
 }

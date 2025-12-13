@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-use App\Models\Teacher;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Achievement>
@@ -22,7 +22,7 @@ class AchievementFactory extends Factory
             'type' => fake()->randomElement(['badge', 'medal', 'trophy']),
             'title' => fake()->text(),
             'description' => fake()->text(),
-            'teacher_id' => Teacher::inRandomOrder()->first()->id
+            'teacher_id' => User::where('type', '=', 'teacher')->inRandomOrder()->first()->id
         ];
     }
 }

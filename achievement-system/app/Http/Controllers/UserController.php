@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
-use App\Models\StudentHasAchievement;
+use App\Models\Achievement;
+
+use App\Models\AchievementUser;
 
 use App\Models\User;
 
@@ -13,25 +14,23 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
 
-use App\UserType;
-
 class UserController extends Controller
 {
     public function dashboard()
     {
-        $user = User::find(Auth::id());
-        switch ($user->type())
+        switch ($type = Auth::user()->type)
         {
-            case UserType::Administrator:
-                return view("admin.dashboard", ['users' => User::all()]);
-            case UserType::Teacher:
-                return view("teacher.dashboard", ['students' => Student::with('user')->get()]);
-            case UserType::Guardian:
-                return view("guardian.dashboard", ['students' => Student::with('user')->get()]);
-            case UserType::Student:
-                return view("student.dashboard", ['achievements' => StudentHasAchievement::with('achievement')->where('student_id', '=', Auth::id())->orderByDesc('created_at')->get()]);
+            case 'administrator':
+                return view("administrator.dashboard", ['users' => User::all()]);
+            case 'teacher':
+                return view("teacher.dashboard", ['students' => User::where('type', 'student')->get()]);
+            case 'guardian':
+                return view("guardian.dashboard", ['students' => User::where('type', 'student')->get()]);
+            case 'student':
+                $user = User::find(Auth::id());
+                return view("student.dashboard", ['achievements' => $user->achievements()->orderByDesc('created_at')->get()]);
         }
-        abort(404);
+        abort(404, 'Could not find corresponding dashboard for user with type '. $type);
     }
     
     public function updateEmail(Request $request)

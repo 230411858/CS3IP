@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Classroom extends Model
 {
@@ -19,11 +19,11 @@ class Classroom extends Model
     protected $fillable = [
         'name',
         'year_group',
-        'teacher_id'
+        'description'
     ];
 
-    public function teacher(): HasOne
+    public function user(): BelongsToMany
     {
-        return $this->hasOne(Teacher::class, 'id', 'teacher_id');
+        return $this->belongsToMany(User::class, 'user_has_classroom', 'classroom_id', 'user_id');
     }
 }

@@ -2,7 +2,30 @@
 
 @section('content')
 <a href="{{ route('dashboard') }}"><- Back to dashboard</a>
-<form method="POST" action="{{ route('award.attempt') }}">
+@if ($errors->any())
+    <section>
+        <div>
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li class="error">
+                    {{ $error }}
+                </li>
+                @endforeach
+            </ul>
+        </div>
+    </section>
+@elseif (session()->has('success'))
+    <section>
+        <div>
+            <ul>
+                <li class="success">
+                    {{ session('success') }}
+                </li>
+            </ul>
+        </div>
+    </section>
+@endif
+<form method="POST" action="{{ route('teacher.award.attempt') }}">
     @csrf
     <p>Student ID</p>
     <input type="text" value="{{ $student->id }}" disabled>
@@ -16,7 +39,7 @@
     <br>
     <label for="type">Award type</label>
     <br>
-    <select id="type" name="type">
+    <select id="type" name="type" required>
         <option value="badge" selected>Badge</option>
         <option value="medal">Medal</option>
         <option value="trophy">Trophy</option>

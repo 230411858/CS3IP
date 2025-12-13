@@ -50,20 +50,6 @@ class RegisterController extends Controller
             'type' => $validated['type']
         ]);
 
-        switch ($validated['type'])
-        {
-            case 'student':
-                Student::create([
-                    'user_id' => $user->id
-                ]);
-                break;
-            case 'guardian':
-                Guardian::create([
-                    'user_id' => $user->id
-                ]);
-                break;
-        }
-
         Auth::login($user);
 
         return redirect()->route('dashboard');

@@ -13,6 +13,19 @@ class StudentHasAchievementSeeder extends Seeder
      */
     public function run(): void
     {
-        StudentHasAchievement::factory(20)->create();
+        StudentHasAchievement::factory()->create([
+            "student_id"=> 3,
+            "achievement_id" => 1
+        ]);
+
+        StudentHasAchievement::factory()->create([
+            "student_id"=> 3,
+            "achievement_id" => 2
+        ]);
+
+        StudentHasAchievement::factory()->create([
+            "student_id"=> 3,
+            "achievement_id" => 3
+        ]);
     }
 }

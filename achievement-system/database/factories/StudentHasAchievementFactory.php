@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-use App\Models\Student;
+use App\Models\User;
 
 use App\Models\Achievement;
 
@@ -21,7 +21,7 @@ class StudentHasAchievementFactory extends Factory
     public function definition(): array
     {
         return [
-            'student_id' => Student::inRandomOrder()->first()->id,
+            'student_id' => User::where('type', '=', 'student')->inRandomOrder()->first()->id,
             'achievement_id' => Achievement::inRandomOrder()->first()->id,
         ];
     }

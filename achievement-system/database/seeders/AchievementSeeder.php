@@ -13,6 +13,27 @@ class AchievementSeeder extends Seeder
      */
     public function run(): void
     {
-        Achievement::factory(20)->create();
+        Achievement::factory()->create([
+            "type" => "badge",
+            "title" => "Your First Badge",
+            "description"=> "Congratulations, you earned you first badge!",
+            "teacher_id" => 2,
+        ]);
+
+        Achievement::factory()->create([
+            "type" => "medal",
+            "title" => "Your First Medal",
+            "description"=> "Congratulations, you earned you first medal!",
+            "teacher_id" => 2,
+        ]);
+
+        Achievement::factory()->create([
+            "type" => "trophy",
+            "title" => "Your First Trophy",
+            "description"=> "Congratulations, you earned you first trophy!",
+            "teacher_id" => 2,
+        ]);
+
+        Achievement::factory(5)->create();
     }
 }

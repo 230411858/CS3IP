@@ -28,10 +28,10 @@
                 {{ $user->email }}
             </td>
             <td>
-                {{ ucfirst($user->type()->value) }}
+                {{ ucfirst($user->type) }}
             </td>
             <td class="edit">
-                <a href="{{ route('admin.edit', $user->id) }}">Edit</a>
+                <a href="{{ route('administrator.edit', $user->id) }}">Edit</a>
             </td>
         </tr>
         @endforeach

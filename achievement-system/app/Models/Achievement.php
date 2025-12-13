@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Achievement extends Model
 {
@@ -23,8 +24,13 @@ class Achievement extends Model
         'teacher_id'
     ];
 
-    public function user(): HasOne
+    public function teacher(): BelongsTo
     {
-        return $this->hasOne(Teacher::class, 'id', 'teacher_id');
+        return $this->belongsTo(User::class, 'teacher_id', 'id');
+    }
+
+    public function students(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'student_has_achievement', 'achievement_id', 'student_id');
     }
 }

@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('teachers', function (Blueprint $table) {
+        Schema::create('achievements', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained(table:'users', column:'id')->onUpdate('cascade')->onDelete('cascade');
+            $table->enum('type', ['badge', 'medal', 'trophy'])->default('badge');
+            $table->string('title');
+            $table->string('description', 1023)->nullable();
+            $table->foreignId('teacher_id')->constrained(table:'users', column:'id')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('teachers');
+        Schema::dropIfExists('achievements');
     }
 };

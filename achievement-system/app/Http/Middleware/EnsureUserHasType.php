@@ -8,13 +8,6 @@ use Illuminate\Http\Request;
 
 use Symfony\Component\HttpFoundation\Response;
 
-use App\Models\Administrator;
-
-use App\Models\Teacher;
-
-use App\Models\Guardian;
-
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class EnsureUserHasType
@@ -24,13 +17,18 @@ class EnsureUserHasType
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, string $type): Response
+    public function handle(Request $request, Closure $next, string $required_type): Response
     {
-        $user = User::find(Auth::id());
-        if ($user->type()->value === $type) 
+        $roles = [
+            'administrator' => 3, 
+            'teacher' => 2,
+            'guardian' => 1,
+            'student' => 0
+        ];
+        if ($roles[Auth::user()->type] >= $roles[$required_type])
         {
             return $next($request);
         }
-        return back()->withErrors('Forbidden');
+        return back()->withErrors('Forbidden: You must be at least a' . $required_type === 'administrator' ? 'n ' : ' ' . ucfirst($required_type) . ' to complete this request');
     }
 }

@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Achievement;
-use App\Models\StudentHasAchievement;
-use App\Models\User;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Auth;
+
+use App\Models\User;
+
+use App\Models\Achievement;
+
+use App\Models\AchievementUser;
+use App\Models\StudentHasAchievement;
 
 class TeacherController extends Controller
 {
@@ -22,7 +27,7 @@ class TeacherController extends Controller
     public function award(Request $request)
     {
         $validated = $request->validate([
-            'id' => 'required|exists:students,user_id',
+            'id' => 'required|exists:users,id',
 
             'type' => 'required|in:badge,medal,trophy',
 
@@ -31,14 +36,22 @@ class TeacherController extends Controller
             'description' => 'nullable|string|max:1023'
         ]);
 
+        if (($type = User::find($validated['id'])->type) !== 'student')
+        {
+            return back()->withErrors('You can only award achievements to students, not ' . $type .'s');
+        }
+
         $achievement = Achievement::factory()->create([
             'type' => $validated['type'],
             'title' => $validated['title'],
             'description' => $validated['description'],
-            'teacher_id' => Auth::id(),
+            'teacher_id' => Auth::id()
         ]);
 
-        StudentHasAchievement::factory()->create(['student_id' => $validated['id'], 'achievement_id' => $achievement->id]);
+        StudentHasAchievement::factory()->create([
+            'student_id' => $validated['id'], 
+            'achievement_id' => $achievement->id
+        ]);
 
         return back()->with('success', 'Successfully issued award');
     }

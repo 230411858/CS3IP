@@ -18,12 +18,12 @@ services:
       - 8000:80
     depends_on:
       db:
-        condition: service_healthy
+        condition: service_healthy # Waits for DB to be connectable before running post start commands
         restart: true
     post_start:
-      - command: php artisan key:generate 
-      - command: php artisan migrate:refresh --seed 
-      - command: php artisan optimize:clear
+      - command: php artisan key:generate # Generates encryption key
+      - command: php artisan migrate:refresh --seed # Runs migrations and seeds database
+      - command: php artisan optimize:clear # Caches files
 
   db:
     image: mariadb
