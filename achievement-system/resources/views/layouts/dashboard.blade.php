@@ -7,7 +7,7 @@
 
 @section('content')
     <h1>
-        Welcome {{ Auth::user()->name }}, you are a{{ preg_match('/^[aeiou]/i', Auth::user()->type[0]) === 1 ? 'n' : '' }} {{ ucfirst(Auth::user()->type) }}
+        Welcome {{ Auth::user()->name }}, you are a{{ Auth::user()->type === 'administrator' ? 'n' : '' }} {{ ucfirst(Auth::user()->type) }}
     </h1>
     <br>
     @if ($errors->any())

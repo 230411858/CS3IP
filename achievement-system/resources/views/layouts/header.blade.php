@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,9 +22,10 @@
                     @auth
                         <ul>
                             <li>
-                                <a href="/dashboard">Home</a> </li>
+                                <a href="{{ route('dashboard') }}">Home</a>
+                            </li>
                             <li>
-                                <form method="POST" action="/logout">
+                                <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit">Logout</button>
                                 </form>
@@ -32,12 +33,12 @@
                         </ul>
                     @endauth
                     @guest
-                    <li>
-                        <a href="/login">Login</a>
-                    </li>
-                    <li>
-                        <a href="/register">Register</a>
-                    </li>
+                        <li>
+                            <a href="{{ route('login') }}">Login</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('register') }}">Register</a>
+                        </li>
                     @endguest
                 </ul>
             </nav>
