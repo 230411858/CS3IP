@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('students_have_achievements', function (Blueprint $table) {
+        Schema::create('students_have_guardians', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained(table:'users', column:'id')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('achievement_id')->constrained(table:'achievements', column:'id')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('guardian_id')->constrained(table:'users', column:'id')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
-            $table->unique(['student_id', 'achievement_id']);
+            $table->unique(['student_id', 'guardian_id']);
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('student_has_achievement');
+        Schema::dropIfExists('student_has_guardians');
     }
 };

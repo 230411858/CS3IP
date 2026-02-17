@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-
-class AchievementUser extends Pivot
+class StudentHasGuardian extends Pivot
 {
-    /** @use HasFactory<\Database\Factories\AchievementUserFactory> */
+    /** @use HasFactory<\Database\Factories\StudentHasGuardianFactory> */
     use HasFactory;
+
+    public $table = 'students_have_guardians';
 
     /**
      * The attributes that are mass assignable.
@@ -18,6 +19,6 @@ class AchievementUser extends Pivot
      */
     protected $fillable = [
         'student_id',
-        'achievement_id'
+        'guardian_id'
     ];
 }

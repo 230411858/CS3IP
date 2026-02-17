@@ -12,6 +12,8 @@ use App\Http\Controllers\AdministratorController;
 
 use App\Http\Controllers\TeacherController;
 
+use App\Http\Controllers\GuardianController;
+
 use App\Http\Middleware\EnsureUserHasType;
 
 use Illuminate\Support\Facades\Route;
@@ -39,7 +41,7 @@ Route::middleware('auth')->group(function()
 
     Route::view('/settings', 'settings')->name('settings');
 
-    // Admin routes
+    // Administrator routes
     Route::middleware(EnsureUserHasType::class.':administrator')->group(function()
     {
         Route::get('/edit/{id}', [AdministratorController::class, 'showEdit'])->name('administrator.edit');
@@ -53,6 +55,16 @@ Route::middleware('auth')->group(function()
         Route::get('/award/{id}', [TeacherController::class, 'showAward'])->name('teacher.award');
 
         Route::post('/award', [TeacherController::class, 'award'])->name('teacher.award.attempt');
+    });
+
+    // Guardian routes
+    Route::middleware(EnsureUserHasType::class.':guardian')->group(function()
+    {
+        Route::get('/view/{id}', [GuardianController::class, 'view'])->name('guardian.view');
+
+        Route::view('/add', 'guardian.add')->name('guardian.add');
+
+        Route::post('/add', [GuardianController::class, 'add'])->name('guardian.add.attempt');
     });
 
 });

@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             ClassroomSeeder::class,
             AchievementSeeder::class,
             UserHasClassroomSeeder::class,
-            StudentHasAchievementSeeder::class
+            StudentHasAchievementSeeder::class,
+            StudentHasGuardianSeeder::class,
         ]);
     }
 }

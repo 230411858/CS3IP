@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\UserHasClassroom;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserHasClassroomSeeder extends Seeder
@@ -19,12 +18,12 @@ class UserHasClassroomSeeder extends Seeder
         ]);
 
         UserHasClassroom::factory()->create([
-            "user_id" => 3,
+            "user_id" => 4,
             "classroom_id" => 1
         ]);
 
         UserHasClassroom::factory()->create([
-            "user_id" => 4,
+            "user_id" => 5,
             "classroom_id" => 1
         ]);
     }

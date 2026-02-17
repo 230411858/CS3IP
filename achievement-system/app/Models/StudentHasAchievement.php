@@ -11,6 +11,8 @@ class StudentHasAchievement extends Pivot
     /** @use HasFactory<\Database\Factories\StudentHasAchievementFactory> */
     use HasFactory;
 
+    public $table = "students_have_achievements";
+
     /**
      * The attributes that are mass assignable.
      *

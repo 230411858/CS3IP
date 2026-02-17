@@ -18,17 +18,17 @@ class UserController extends Controller
 {
     public function dashboard()
     {
-        switch ($type = Auth::user()->type)
+        $user = User::find(Auth::id());
+        switch ($type = $user->type)
         {
             case 'administrator':
                 return view("administrator.dashboard", ['users' => User::all()]);
             case 'teacher':
                 return view("teacher.dashboard", ['students' => User::where('type', 'student')->get()]);
             case 'guardian':
-                return view("guardian.dashboard", ['students' => User::where('type', 'student')->get()]);
+                return view("guardian.dashboard", ['children' => $user->children()->with('achievements')->get()]);
             case 'student':
-                $user = User::find(Auth::id());
-                return view("student.dashboard", ['achievements' => $user->achievements()->orderByDesc('created_at')->get()]);
+                return view("student.dashboard", ['achievements' => $user->achievements()->orderByDesc('created_at')->get(), 'guardians' => $user->guardians()->get()]);
         }
         abort(404, 'Could not find corresponding dashboard for user with type '. $type);
     }

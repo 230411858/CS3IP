@@ -11,6 +11,8 @@ class UserHasClassroom extends Pivot
     /** @use HasFactory<\Database\Factories\UserHasClassroomFactory> */
     use HasFactory;
 
+    public $table = "users_have_classrooms";
+
     /**
      * The attributes that are mass assignable.
      *
