@@ -62,7 +62,7 @@ Route::middleware('auth')->group(function()
     // Guardian routes
     Route::middleware(EnsureUserHasType::class.':guardian')->group(function()
     {
-        Route::get('/view/{id}', [GuardianController::class, 'view'])->name('guardian.view');
+        Route::get('/view/student/{id}', [GuardianController::class, 'view'])->name('guardian.view');
 
         Route::view('/add', 'guardian.add')->name('guardian.add');
 
@@ -72,7 +72,7 @@ Route::middleware('auth')->group(function()
     // Student routes
     Route::middleware(EnsureUserHasType::class.':student')->group(function()
     {
-        Route::get('/view/{id}', [StudentController::class, 'view'])->name('student.view');
+        Route::get('/view/achievement/{id}', [StudentController::class, 'view'])->name('student.view');
     });
 
 });
