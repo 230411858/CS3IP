@@ -14,6 +14,8 @@ use App\Http\Controllers\TeacherController;
 
 use App\Http\Controllers\GuardianController;
 
+use App\Http\Controllers\StudentController;
+
 use App\Http\Middleware\EnsureUserHasType;
 
 use Illuminate\Support\Facades\Route;
@@ -65,6 +67,12 @@ Route::middleware('auth')->group(function()
         Route::view('/add', 'guardian.add')->name('guardian.add');
 
         Route::post('/add', [GuardianController::class, 'add'])->name('guardian.add.attempt');
+    });
+
+    // Student routes
+    Route::middleware(EnsureUserHasType::class.':student')->group(function()
+    {
+        Route::get('/view/{id}', [StudentController::class, 'view'])->name('student.view');
     });
 
 });

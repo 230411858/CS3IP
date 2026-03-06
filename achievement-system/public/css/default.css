@@ -14,7 +14,8 @@ body
     /* Makes sure that the footer is at the bottom of the page even if there is not enough content */
     min-height: 100vh;
 }
-main 
+
+main
 {
     flex-grow: 1;
 }
@@ -33,11 +34,11 @@ header
     width: fit-content;
     /* Makes the header items horizontal */
     flex-direction: row;
+    flex-wrap: wrap;
     text-align: center;
-    justify-content: center;
     align-items: center;
     margin: auto;
-    gap: 75vw;
+    column-gap: 75vw;
 }
 header li
 {
@@ -75,12 +76,31 @@ header a:hover
     color: darkgrey;
 }
 
+#breadcrumbs
+{
+    margin-top: 0.6vh;
+    margin-left: 0.5vw;
+}
+
+#breadcrumbs li
+{
+    all:unset;
+}
+
+#breadcrumbs a
+{
+    color: blue;
+    padding: 0px;
+}
+
 /* Footer */
 footer
 {
-    height: 50px;
+    height: 4vh;
+    margin-top: 1vh;
     margin-bottom: 0px;
-    margin-left: 5px;
+    padding-top: 0.2vh;
+    padding-left: 0.5vw;
 }
 .error
 {
@@ -91,4 +111,9 @@ footer
 {
     color: green;
     list-style: none;
+}
+
+tr:nth-child(odd)
+{
+    background-color: lightblue;
 }

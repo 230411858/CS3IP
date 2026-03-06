@@ -1,7 +1,16 @@
 @extends('layouts.default')
-
+@section('breadcrumbs')
+    <ul>
+        <li>
+            <a href="{{ route('dashboard') }}">Dashboard</a>
+        </li>
+        >
+        <li>
+            <a href="{{ route('administrator.edit', $user->id) }}">Edit User</a>
+        </li>
+    </ul>
+@endsection
 @section('content')
-<a href="{{ route('dashboard') }}"><- Back to dashboard</a>
 @if ($errors->any())
     <section>
         <div>

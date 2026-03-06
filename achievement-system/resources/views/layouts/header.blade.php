@@ -42,4 +42,5 @@
                     @endguest
                 </ul>
             </nav>
+            <div id="breadcrumbs">@yield('breadcrumbs')</div>
         </header>

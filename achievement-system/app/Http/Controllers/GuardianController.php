@@ -9,13 +9,13 @@ use Illuminate\Http\Request;
 
 class GuardianController extends Controller
 {
-    public function view($id)
+    public function view($child_id)
     {
-        if (($child = User::findOrFail($id))->type === 'student' && Auth::user()->children()->get()->contains($child))
+        if (($child = User::findOrFail($child_id))->type === 'student' && Auth::user()->children()->get()->contains($child))
         {
             return view('guardian.view', ['child' => $child]);
         }
-        abort(403);
+        return back()->withErrors('Please check if the student you are attempting to access has been added to your account.', 403);
     }
 
     public function add(Request $request)

@@ -1,7 +1,16 @@
 @extends('layouts.default')
-
+@section('breadcrumbs')
+    <ul>
+        <li>
+            <a href="{{ route('dashboard') }}">Dashboard</a>
+        </li>
+        >
+        <li>
+            <a href="{{ route('teacher.award', $student->id) }}">Award</a>
+        </li>
+    </ul>
+@endsection
 @section('content')
-<a href="{{ route('dashboard') }}"><- Back to dashboard</a>
 @if ($errors->any())
     <section>
         <div>
@@ -44,6 +53,11 @@
         <option value="medal">Medal</option>
         <option value="trophy">Trophy</option>
     </select>
+    <br>
+    <p>Colour</p>
+    <br>
+    <input type="color">
+    <br>
     <p>Award title</p>
     <input type="text" name="title" required>
     <br>

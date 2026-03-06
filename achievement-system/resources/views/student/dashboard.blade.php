@@ -36,6 +36,9 @@
             <td>
                 {{ $achievement->created_at }}
             </td>
+            <td>
+                <a href="{{ route('student.view', $achievement->id) }}">View</a>
+            </td>
         </tr>
         @endforeach
     </table>

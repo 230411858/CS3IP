@@ -10,7 +10,6 @@ use App\Models\User;
 
 use App\Models\Achievement;
 
-use App\Models\AchievementUser;
 use App\Models\StudentHasAchievement;
 
 class TeacherController extends Controller

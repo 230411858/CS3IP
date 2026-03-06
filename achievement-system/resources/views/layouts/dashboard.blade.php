@@ -1,10 +1,11 @@
 @extends('layouts.default')
-
-@section('css')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
-    @yield('css')
-@overwrite
-
+@section('breadcrumbs')
+    <ul>
+        <li>
+            <a href="{{ route('dashboard') }}">Dashboard</a>
+        </li>
+    </ul>
+@endsection
 @section('content')
     <h1>
         Welcome {{ Auth::user()->name }}, you are a{{ Auth::user()->type === 'administrator' ? 'n' : '' }} {{ ucfirst(Auth::user()->type) }}
