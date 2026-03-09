@@ -72,7 +72,7 @@ Route::middleware('auth')->group(function()
     // Student routes
     Route::middleware(EnsureUserHasType::class.':student')->group(function()
     {
-        Route::get('/view/achievement/{id}', [StudentController::class, 'view'])->name('student.view');
+        Route::get('/view/{type}', [StudentController::class, 'viewAchievement'])->name('student.view');
     });
 
 });

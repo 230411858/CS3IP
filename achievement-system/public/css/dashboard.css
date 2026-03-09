@@ -1,0 +1,43 @@
+/* Tables */
+table
+{
+    width: 100vw;
+}
+
+th
+{
+    text-align: center;
+}
+
+td
+{
+    text-align: center;
+}
+
+.preview
+{
+    height: 2.25vh;
+    width: 1vw;
+}
+
+tr:nth-child(odd)
+{
+    background-color: lightblue;
+}
+
+#achievementLinks
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    position: absolute;
+    bottom: 6vh;
+    width: 100vw;
+    justify-content: space-evenly;
+}
+
+#achievementLinks a
+{
+    text-decoration: none;
+    border-style: solid;
+}

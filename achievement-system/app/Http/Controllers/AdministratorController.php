@@ -36,7 +36,6 @@ class AdministratorController extends Controller
 
         if (!empty($raw_name = $validated['name']))
         {
-
             $raw_name = trim($raw_name);
 
             $individual_names = explode(" ", $raw_name);

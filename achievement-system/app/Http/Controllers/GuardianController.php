@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\StudentHasGuardian;
+use App\Models\StudentsHaveGuardians;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -35,7 +35,7 @@ class GuardianController extends Controller
 
         if ($child->type === 'student' && Auth::validate(["email" => $validated['email'], "password" => $validated['password']]))
         {
-            StudentHasGuardian::factory()->create([
+            StudentsHaveGuardians::factory()->create([
                 'student_id' => $child->id,
                 'guardian_id' => Auth::id()
             ]);

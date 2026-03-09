@@ -1,4 +1,8 @@
 @extends('layouts.default')
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    @yield('css')
+@overwrite
 @section('breadcrumbs')
     <ul>
         <li>

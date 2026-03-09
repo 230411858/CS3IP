@@ -20,12 +20,6 @@ main
     flex-grow: 1;
 }
 
-header h1 a
-{
-    font-family: monospace;
-    font-size: 36px;
-}
-
 /* Header */
 header
 {
@@ -39,6 +33,13 @@ header
     align-items: center;
     margin: auto;
     column-gap: 75vw;
+    height: 6vh;
+    background-color: lightskyblue;
+}
+header h1 a
+{
+    font-family: monospace;
+    font-size: 36px;
 }
 header li
 {
@@ -97,10 +98,10 @@ header a:hover
 footer
 {
     height: 4vh;
-    margin-top: 1vh;
     margin-bottom: 0px;
-    padding-top: 0.2vh;
+    padding-top: 0.6vh;
     padding-left: 0.5vw;
+    background-color: lightskyblue;
 }
 .error
 {
@@ -111,9 +112,4 @@ footer
 {
     color: green;
     list-style: none;
-}
-
-tr:nth-child(odd)
-{
-    background-color: lightblue;
 }

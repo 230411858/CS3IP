@@ -3,15 +3,12 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-
 use App\Models\User;
 
-use App\Models\Achievement;
-
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\StudentHasAchievement>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\StudentsHaveGuardians>
  */
-class StudentHasAchievementFactory extends Factory
+class StudentsHaveGuardiansFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -22,7 +19,7 @@ class StudentHasAchievementFactory extends Factory
     {
         return [
             'student_id' => User::where('type', '=', 'student')->inRandomOrder()->first()->id,
-            'achievement_id' => Achievement::inRandomOrder()->first()->id,
+            'guardian_id' => User::where('type', '=', 'guardian')->inRandomOrder()->first()->id,
         ];
     }
 }

@@ -31,6 +31,11 @@ class Achievement extends Model
 
     public function students(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'student_has_achievement', 'achievement_id', 'student_id');
+        return $this->belongsToMany(User::class, 'students_have_achievements', 'achievement_id', 'student_id');
+    }
+
+    public function rarity()
+    {
+        return $this->students()->count() / User::where('type', '=', 'student')->get()->count();
     }
 }

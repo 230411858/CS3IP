@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class StudentHasAchievement extends Pivot
+class StudentsHaveAchievements extends Pivot
 {
-    /** @use HasFactory<\Database\Factories\StudentHasAchievementFactory> */
+    /** @use HasFactory<\Database\Factories\StudentsHaveAchievementsFactory> */
     use HasFactory;
 
     public $table = "students_have_achievements";

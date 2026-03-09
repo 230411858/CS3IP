@@ -10,7 +10,7 @@ use App\Models\User;
 
 use App\Models\Achievement;
 
-use App\Models\StudentHasAchievement;
+use App\Models\StudentsHaveAchievements;
 
 class TeacherController extends Controller
 {
@@ -47,7 +47,7 @@ class TeacherController extends Controller
             'teacher_id' => Auth::id()
         ]);
 
-        StudentHasAchievement::factory()->create([
+        StudentsHaveAchievements::factory()->create([
             'student_id' => $validated['id'], 
             'achievement_id' => $achievement->id
         ]);

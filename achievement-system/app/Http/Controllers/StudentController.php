@@ -3,20 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Achievement;
-use App\Models\User;
-use App\Models\StudentHasGuardian;
-use App\Models\StudentHasAchievement;
+use App\Models\StudentsHaveAchievements;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    public function view($achievement_id)
+    public function viewAchievement($type)
     {
-        if (($achievement = Achievement::findOrFail($achievement_id)) && !is_null(StudentHasAchievement::where('student_id', '=', Auth::id())->firstWhere('achievement_id', '=', $achievement_id)))
+        if (in_array($type, ['badge', 'medal', 'trophy']))
         {
-            return view('student.view', ['achievement' => $achievement]);
+            return view('student.view', ['achievements' => Auth::user()->achievements()->where('type', '=', $type)->orderByDesc('created_at')->get(), 'type' => $type]);
         }
-        abort(403);
+        return back()->withErrors('Achievements must be of type badge, medal or trophy');
     }
 }

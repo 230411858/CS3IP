@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\StudentHasGuardian;
+use App\Models\StudentsHaveGuardians;
 use Illuminate\Database\Seeder;
 
 class StudentHasGuardianSeeder extends Seeder
@@ -12,7 +12,7 @@ class StudentHasGuardianSeeder extends Seeder
      */
     public function run(): void
     {
-        StudentHasGuardian::factory()->create([
+        StudentsHaveGuardians::factory()->create([
             "student_id" => 4,
             "guardian_id" => 3
         ]);

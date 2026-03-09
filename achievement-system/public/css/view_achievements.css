@@ -1,0 +1,47 @@
+main
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 90vh;
+}
+
+.shelf
+{
+    width: 100vw;
+    height: 30vh;
+    z-index: 1;
+}
+
+.achievements
+{
+    position: absolute;
+    width: 20vw;
+    height: 24vh;
+    z-index: 2;
+}
+
+.details
+{
+    position: absolute;
+    width: 20vw;
+    height: 24vh;
+    color: white;
+    background-color: black;
+    opacity: 0;
+    z-index: 3;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+}
+
+.details:hover
+{
+    opacity: 0.8;
+}
+
+.details h3
+{
+    text-align: center;
+    padding-top: 1vh;
+}
