@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\StudentsHaveAchievements;
 use Illuminate\Database\Seeder;
 
-class StudentHasAchievementSeeder extends Seeder
+class StudentsHaveAchievementsSeeder extends Seeder
 {
     /**
      * Run the database seeds.

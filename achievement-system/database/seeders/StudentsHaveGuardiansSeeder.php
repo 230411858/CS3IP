@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\StudentsHaveGuardians;
 use Illuminate\Database\Seeder;
 
-class StudentHasGuardianSeeder extends Seeder
+class StudentsHaveGuardiansSeeder extends Seeder
 {
     /**
      * Run the database seeds.
