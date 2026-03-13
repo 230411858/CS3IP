@@ -36,6 +36,6 @@ class Achievement extends Model
 
     public function rarity()
     {
-        return $this->students()->count() / User::where('type', '=', 'student')->get()->count();
+        return $this->students()->count() / User::where('type', '=', 'student')->count();
     }
 }

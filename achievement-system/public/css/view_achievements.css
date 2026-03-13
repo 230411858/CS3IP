@@ -6,7 +6,7 @@ main
     height: 90vh;
 }
 
-.shelf
+.backgrounds
 {
     width: 100vw;
     height: 30vh;
@@ -17,7 +17,7 @@ main
 {
     position: absolute;
     width: 20vw;
-    height: 24vh;
+    height: 22vh;
     z-index: 2;
 }
 
@@ -25,7 +25,7 @@ main
 {
     position: absolute;
     width: 20vw;
-    height: 24vh;
+    height: 23vh;
     color: white;
     background-color: black;
     opacity: 0;

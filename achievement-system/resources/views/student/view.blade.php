@@ -9,13 +9,13 @@
             @for ($achievementNumber = 0; $achievementNumber < $achievements->count(); $achievementNumber++)
                 #achievement{{ $achievementNumber }}
                 {
-                    top: {{ 9.25 + $rowOffset * 30 }}vh;
-                    left: {{ 2.75 + $rowIndex * 24.5 }}vw;
+                    top: {{ 11 + $rowOffset * 30 }}vh;
+                    left: {{  2.9 + $rowIndex * 24.75 }}vw;
                 }
                 #detail{{ $achievementNumber }}
                 {
-                    top: {{ 9.25 + $rowOffset * 30 }}vh;
-                    left: {{ 2.75 + $rowIndex * 24.5 }}vw;
+                    top: {{ 9.5 + $rowOffset * 30 }}vh;
+                    left: {{  2.9 + $rowIndex * 24.75 }}vw;
                 }
                 @php
                     $rowIndex++;
@@ -39,8 +39,8 @@
     </ul>
 @endsection
 @section('content')
-@for ($shelvesToAdd = $achievements->count() > 36 ? ceil($achievements->count / 4) : 3; $shelvesToAdd > 0; $shelvesToAdd--)
-    <img class="shelf" src={{ asset("storage/images/trophy_shelf.png") }} alt="A shelf to hold your earned trophies">
+@for ($rowsToAdd = $achievements->count() > 36 ? ceil($achievements->count / 4) : 3; $rowsToAdd > 0; $rowsToAdd--)
+    <img class="backgrounds" src={{ asset("storage/images/".$type."_background.png") }} alt="A shelf to hold your earned trophies">
 @endfor
 @php
     $achievementNumber = 0;
