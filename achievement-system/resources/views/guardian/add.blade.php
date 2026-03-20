@@ -3,15 +3,9 @@
     <link rel="stylesheet" href="css/login_register.css">
 @endsection
 @section('breadcrumbs')
-    <ul>
-        <li>
-            <a href="{{ route('dashboard') }}">Dashboard</a>
-        </li>
-        >
-        <li>
-            <a href="{{ route('guardian.add') }}">Add Child</a>
-        </li>
-    </ul>
+    <a href="{{ route('dashboard') }}">Dashboard</a>
+    >
+    <a href="{{ route('guardian.add') }}">Add Child</a>
 @endsection
 @section('content')
 <div class="form-card">

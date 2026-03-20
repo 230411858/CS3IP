@@ -9,6 +9,7 @@
         </title>
         <link rel="stylesheet" href="{{ asset('css/default.css') }}">
         @yield('css')
+        @yield('js')
     </head>
     <body>
         <header>
@@ -18,29 +19,20 @@
                 </a>
             </h1>
             <nav>
-                <ul>
-                    @auth
-                        <ul>
-                            <li>
-                                <a href="{{ route('dashboard') }}">Home</a>
-                            </li>
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit">Logout</button>
-                                </form>
-                            </li>
-                        </ul>
-                    @endauth
-                    @guest
-                        <li>
+                <div id="breadcrumbs">
+                        @yield('breadcrumbs')
+                </div>
+                <div id="header-links">
+                        @auth
+                            <a href="{{ route('dashboard') }}">Home</a>
+                            <a href="{{ route('settings') }}">Settings</a>
+                            <a href="{{ route('logout') }}">Logout</a>
+                        @endauth
+                        @guest
                             <a href="{{ route('login') }}">Login</a>
-                        </li>
-                        <li>
                             <a href="{{ route('register') }}">Register</a>
-                        </li>
-                    @endguest
-                </ul>
+                        @endguest
+                    </ul>
+                </div>
             </nav>
-            <div id="breadcrumbs">@yield('breadcrumbs')</div>
         </header>

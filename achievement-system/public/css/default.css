@@ -24,84 +24,67 @@ main
 header
 {
     display: flex;
-    /* Stops the header links from taking up the entire width of the page */
-    width: fit-content;
-    /* Makes the header items horizontal */
-    flex-direction: row;
-    flex-wrap: wrap;
-    text-align: center;
-    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
     margin: auto;
     column-gap: 75vw;
-    height: 6vh;
+    min-height: 6vh;
+    padding-left: 0.25vw;
     background-color: lightskyblue;
-}
-header h1 a
-{
-    font-family: monospace;
-    font-size: 36px;
-}
-header li
-{
-    /* Makes the header links horizontal */
-    float: left;
-    /* Gets rid of the dot at the start of each list element */
-    list-style: none;
-    border-style: solid;
-}
-header li:hover
-{
-    color: darkgrey;
-}
-header li button
-{
-    /* Styles the logout button so it looks consistent with the links */ 
-    border-style: none;
-    background: none;
-    padding: 0px 5px;
-    cursor: pointer;
-    font-size: 15px;
-}
-header li button:hover
-{
-    color: darkgrey;
+    border-bottom: solid;
 }
 header a
 {
     color: black;
     text-decoration: none;
-    padding: 10px;
 }
-header a:hover
+header h1 a
+{
+    font-family: monospace;
+    font-size: 3rem;
+}
+header nav
+{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+header nav a:hover
 {
     color: darkgrey;
+    background-color: darkcyan;
+    transition: all .2s ease-in-out;
 }
-
 #breadcrumbs
 {
-    margin-top: 0.6vh;
-    margin-left: 0.5vw;
+    display: flex;
+    flex-direction: row;
 }
-
-#breadcrumbs li
-{
-    all:unset;
-}
-
 #breadcrumbs a
 {
-    color: blue;
-    padding: 0px;
+    padding: 0vh 0.25vw;
 }
-
+#header-links
+{
+    display: flex;
+    flex-direction: row;
+    border-style: solid none none solid;
+}
+#header-links a
+{
+    padding: 0.25vh 0.25vw 0vh 0.25vw;
+}
 /* Footer */
 footer
 {
-    height: 4vh;
+    min-height: 4vh;
     margin-bottom: 0px;
     padding-top: 0.6vh;
-    padding-left: 0.5vw;
+    padding-left: 0.25vw;
     background-color: lightskyblue;
+    border-top: solid;
 }
 .error
 {

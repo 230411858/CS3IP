@@ -4,20 +4,14 @@
     @yield('css')
 @overwrite
 @section('breadcrumbs')
-    <ul>
-        <li>
-            <a href="{{ route('dashboard') }}">Dashboard</a>
-        </li>
-    </ul>
+    <a href="{{ route('dashboard') }}">Dashboard</a>
 @endsection
 @section('content')
     <h1>
         Welcome {{ Auth::user()->name }}, you are a{{ Auth::user()->type === 'administrator' ? 'n' : '' }} {{ ucfirst(Auth::user()->type) }}
     </h1>
-    <br>
     @if ($errors->any())
         <section>
-            <div>
                 <ul>
                     @foreach ($errors->all() as $error)
                     <li class="error">
@@ -25,18 +19,16 @@
                     </li>
                     @endforeach
                 </ul>
-            </div>
         </section>
     @elseif (session()->has('success'))
         <section>
-            <div>
                 <ul>
                     <li class="success">
                         {{ session('success') }}
                     </li>
                 </ul>
-            </div>
         </section>
     @endif
+    <br>
     @yield('content')
 @overwrite

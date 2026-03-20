@@ -1,51 +1,49 @@
 @extends('layouts.default')
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/award.css') }}">
+@endsection
 @section('breadcrumbs')
-    <ul>
-        <li>
-            <a href="{{ route('dashboard') }}">Dashboard</a>
-        </li>
-        >
-        <li>
-            <a href="{{ route('teacher.award', $student->id) }}">Award</a>
-        </li>
-    </ul>
+    <a href="{{ route('dashboard') }}">Dashboard</a>
+    <p>></p>
+    <a href="{{ route('teacher.award', $students) }}">Award</a>
 @endsection
 @section('content')
 @if ($errors->any())
     <section>
-        <div>
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li class="error">
-                    {{ $error }}
-                </li>
-                @endforeach
-            </ul>
-        </div>
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li class="error">
+                {{ $error }}
+            </li>
+            @endforeach
+        </ul>
     </section>
 @elseif (session()->has('success'))
     <section>
-        <div>
-            <ul>
-                <li class="success">
-                    {{ session('success') }}
-                </li>
-            </ul>
-        </div>
+        <ul>
+            <li class="success">
+                {{ session('success') }}
+            </li>
+        </ul>
     </section>
 @endif
+<h2>Award an Achievement</h2>
+<h4>You are awarding the following students:</h4>
+<table>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    @foreach ($students as $student)
+    <tr>
+        <td>{{ $student->id }}</td>
+        <td>{{ $student->name }}</td>
+        <td>{{ $student->email }}</td>
+    </tr>
+    @endforeach
+</table>
 <form method="POST" action="{{ route('teacher.award.attempt') }}">
     @csrf
-    <p>Student ID</p>
-    <input type="text" value="{{ $student->id }}" disabled>
-    <input type="text" name="id" value="{{ $student->id }}" required hidden>
-    <br>
-    <p>Name</p>
-    <input type="text" value="{{ $student->name }}" disabled>
-    <br>
-    <p>Email address</p>
-    <input type="email" value="{{ $student->email }}" disabled>
-    <br>
+    <input type="text" name="id" value="@foreach ($students as $student){{ $student->id }} @endforeach" hidden readonly>
     <label for="type">Award type</label>
     <br>
     <select id="type" name="type" required>
@@ -55,7 +53,6 @@
     </select>
     <br>
     <p>Colour</p>
-    <br>
     <input type="color">
     <br>
     <p>Award title</p>

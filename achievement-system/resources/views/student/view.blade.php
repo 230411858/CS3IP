@@ -28,25 +28,19 @@
         </style>
 @endsection
 @section('breadcrumbs')
-    <ul>
-        <li>
-            <a href="{{ route('dashboard') }}">Dashboard</a>
-        </li>
-        >
-        <li>
-            <a href="{{ route('student.view', $type) }}">View {{ in_array($type, ['badge', 'medal']) ? ucfirst($type).'s' : 'Trophies' }}</a>
-        </li>
-    </ul>
+    <a href="{{ route('dashboard') }}">Dashboard</a>
+    <p>></p>
+    <a href="{{ route('student.view', $type) }}">View {{ in_array($type, ['badge', 'medal']) ? ucfirst($type).'s' : 'Trophies' }}</a>
 @endsection
 @section('content')
 @for ($rowsToAdd = $achievements->count() > 36 ? ceil($achievements->count / 4) : 3; $rowsToAdd > 0; $rowsToAdd--)
-    <img class="backgrounds" src={{ asset("storage/images/".$type."_background.png") }} alt="A shelf to hold your earned trophies">
+    <img class="backgrounds" src={{ asset("storage/images/".$type."_background.png") }} alt="A shelf to hold your earned achievements">
 @endfor
 @php
     $achievementNumber = 0;
 @endphp
 @foreach ($achievements as $achievement)
-    <img class="achievements" id="achievement{{ $achievementNumber }}" src={{ asset("storage/images/".$achievement->type.".svg") }} alt="A trophy you have been awarded">
+    <img class="achievements" id="achievement{{ $achievementNumber }}" src={{ asset("storage/images/".$achievement->type.".svg") }} alt="An achievement you have been awarded">
     <div class="details" id="detail{{ $achievementNumber }}">
         <h3> {{ $achievement->title }}</h3>
         <br>

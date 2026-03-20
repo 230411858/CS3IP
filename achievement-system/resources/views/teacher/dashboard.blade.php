@@ -1,18 +1,28 @@
 @extends('layouts.dashboard')
+@section('js')
+    <script async src="{{ asset('js/form.js') }}"></script>
+@endsection
 @section('content')
-    <ul>
-        <table>
-        <tr>
-            <th>
-                ID
-            </th>
-            <th>
-                Name
-            </th>
-            <th>
-                Email
-            </th>
-        </tr>
+<form method="GET" action="{{ route('teacher.award') }}">
+    <button type="submit">Award</button>
+    <button type="button" onclick="setCheckboxesTo(true)">Select All</button>
+    <button type="button" onclick="setCheckboxesTo(false)">Deselect All</button>
+    <button type="button" onclick="toggleCheckboxes()">Inverse Selection</button>
+    <table>
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Select
+        </th>
+    </tr>
         @foreach ($students as $student)
         <tr>
             <td>
@@ -24,11 +34,11 @@
             <td>
                 {{ $student->email }}
             </td>
-            <td class="award">
-                <a href="{{ route('teacher.award', $student->id) }}">Award</a>
+            <td>
+                <input type="checkbox" name="{{ $student->id }}" value="{{ $student->id }}">
             </td>
         </tr>
         @endforeach
     </table>
-    </ul>
+    </form>
 @endsection

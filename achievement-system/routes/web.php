@@ -37,11 +37,15 @@ Route::middleware('guest')->group(function()
 // Authenticated routes
 Route::middleware('auth')->group(function()
 {
-    Route::post('/logout', LogoutController::class)->name('logout');
+    Route::get('/logout', LogoutController::class)->name('logout');
 
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
 
     Route::view('/settings', 'settings')->name('settings');
+
+    Route::post('/update/email', [UserController::class, 'updateEmail'])->name('user.update.email.attempt');
+
+    Route::post('/update/password', [UserController::class, 'updatePassword'])->name('user.update.password.attempt');
 
     // Administrator routes
     Route::middleware(EnsureUserHasType::class.':administrator')->group(function()
@@ -54,7 +58,7 @@ Route::middleware('auth')->group(function()
     // Teacher routes
     Route::middleware(EnsureUserHasType::class.':teacher')->group(function()
     {
-        Route::get('/award/{id}', [TeacherController::class, 'showAward'])->name('teacher.award');
+        Route::get('/award', [TeacherController::class, 'showAward'])->name('teacher.award');
 
         Route::post('/award', [TeacherController::class, 'award'])->name('teacher.award.attempt');
     });

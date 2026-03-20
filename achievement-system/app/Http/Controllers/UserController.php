@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+
+use function Pest\Laravel\session;
 
 class UserController extends Controller
 {
@@ -30,12 +33,13 @@ class UserController extends Controller
             case 'student':
                 return view("student.dashboard", ['achievements' => $user->achievements()->orderByDesc('created_at')->get(), 'guardians' => $user->guardians()->get()]);
         }
-        abort(404, 'Could not find corresponding dashboard for user with type '. $type);
+        return back()->withErrors('Could not find corresponding dashboard for user with type '. $type);
     }
     
     public function updateEmail(Request $request)
     {
         $user = User::find(Auth::id());
+
         $validated = $request->validate([
             'email' => 'required|email|unique:users|max:255',
         ]);
@@ -44,7 +48,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return back(200);
+        return back()->with('success', 'Email updated successfully');
     }
 
     public function updatePassword(Request $request)
@@ -52,13 +56,26 @@ class UserController extends Controller
         $user = User::find(Auth::id());
 
         $validated = $request->validate([
-            'password' => 'required|min:8',
+            'currentPassword' => 'required|min:8',
+            'newPassword' => 'required|min:8',
+            'newPasswordConfirmation' => 'required|min:8'
         ]);
 
-        $user->password = Hash::make($validated['password']);
+        if (Hash::check($validated['currentPassword'], $user->password))
+        {
+            if ($validated['newPassword'] === $validated['newPasswordConfirmation'])
+            {
+                $user->password = Hash::make($validated['newPassword']);
 
-        $user->save();
+                $user->save();
 
-        return back(200);
+                return back()->with('success', 'Password updated successfully');
+            }
+            else
+            {
+                return back()->withErrors('Please check that you have entered your new password correctly twice');
+            }
+        }
+        return back()->withErrors('Please check that you have entered your current password correctly');
     }
 }

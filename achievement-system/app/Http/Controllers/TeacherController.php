@@ -11,22 +11,35 @@ use App\Models\User;
 use App\Models\Achievement;
 
 use App\Models\StudentsHaveAchievements;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class TeacherController extends Controller
 {
-    public function showAward(int $id)
+    public function showAward(Request $request)
     {
-        if (($student = User::findOrFail($id))->type === 'student')
+        $students = [];
+        foreach ($request->all() as $id)
         {
-            return view('teacher.award', ['student' => $student]);
+            if (($student = User::findOrFail($id))->type === 'student')
+            {
+                $students[] = $student;
+            }
+            else
+            {
+                return back()->withErrors('Invalid ID; selected user must be a student');
+            }
         }
-        return back();
+        if (empty($students))
+        {
+            return back()->withErrors('You must select at least 1 student before trying to award an achievement');
+        }
+        return view('teacher.award', ['students' => $students]);
     }
 
     public function award(Request $request)
     {
         $validated = $request->validate([
-            'id' => 'required|exists:users,id',
+            'id' => 'required',
 
             'type' => 'required|in:badge,medal,trophy',
 
@@ -35,9 +48,25 @@ class TeacherController extends Controller
             'description' => 'nullable|string|max:1023'
         ]);
 
-        if (($type = User::find($validated['id'])->type) !== 'student')
+
+        $students = [];
+        foreach (explode(' ', trim($validated['id'])) as $id)
         {
-            return back()->withErrors('You can only award achievements to students, not ' . $type .'s');
+            try
+            {
+                if (($student = User::findOrFail($id))->type === 'student')
+                {
+                    $students[] = $student;
+                }
+                else
+                {
+                    return back()->withErrors('Invalid ID; achievements can only be awarded to students');
+                }
+            }
+            catch(ModelNotFoundException)
+            {
+                return back()->withErrors('One or more students could not be found, no achievements were issued');
+            }
         }
 
         $achievement = Achievement::factory()->create([
@@ -47,11 +76,14 @@ class TeacherController extends Controller
             'teacher_id' => Auth::id()
         ]);
 
-        StudentsHaveAchievements::factory()->create([
-            'student_id' => $validated['id'], 
-            'achievement_id' => $achievement->id
-        ]);
+        foreach ($students as $student)
+        {
+            StudentsHaveAchievements::factory()->create([
+                'student_id' => $student->id, 
+                'achievement_id' => $achievement->id
+            ]);
+        }
 
-        return back()->with('success', 'Successfully issued award');
+        return back()->with('success', 'Successfully issued award(s)');
     }
 }

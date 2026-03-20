@@ -18,15 +18,13 @@
     <form method="POST" action="{{ route('register.attempt') }}">
         @csrf
         @if ($errors->any())
-            <div>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li class="error">
-                        {{ $error }}
-                    </li>
-                    @endforeach
-                </ul>
-            </div>
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li class="error">
+                    {{ $error }}
+                </li>
+                @endforeach
+            </ul>
         @endif
         <input type="text" name="name" placeholder="Full name" value="{{ old('name') }}" required maxlength="255" pattern="[a-zA-Z](\s?[a-zA-Z])*">
         <input type="email" name="email" placeholder="Email address" value="{{ old('email') }}" required maxlength="255">

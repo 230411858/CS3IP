@@ -1,14 +1,8 @@
 @extends('layouts.default')
 @section('breadcrumbs')
-    <ul>
-        <li>
-            <a href="{{ route('dashboard') }}">Dashboard</a>
-        </li>
-        >
-        <li>
-            <a href="{{ route('guardian.view', $child->id) }}">View Child</a>
-        </li>
-    </ul>
+    <a href="{{ route('dashboard') }}">Dashboard</a>
+    <p>></p>
+    <a href="{{ route('guardian.view', $child->id) }}">View Child</a>
 @endsection
 @section('content')
 <h1>{{ $child->name }}</h1>

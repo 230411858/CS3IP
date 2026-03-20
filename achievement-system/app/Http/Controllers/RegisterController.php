@@ -20,7 +20,7 @@ class RegisterController extends Controller
     {
         $validated = $request->validate([
 
-            'name' => 'required|string|max:255|regex:/[a-zA-Z](\s?[a-zA-Z])*/',
+            'name' => 'required|string|min:1|max:255|regex:/([a-zA-Z]\s?)*/',
 
             'email' => 'required|email|unique:users|max:255',
 
