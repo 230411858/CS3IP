@@ -7,7 +7,7 @@
     <button type="submit">Award</button>
     <button type="button" onclick="setCheckboxesTo(true)">Select All</button>
     <button type="button" onclick="setCheckboxesTo(false)">Deselect All</button>
-    <button type="button" onclick="toggleCheckboxes()">Inverse Selection</button>
+    <button type="button" onclick="toggleCheckboxes()">Invert Selection</button>
     <table>
     <tr>
         <th>
