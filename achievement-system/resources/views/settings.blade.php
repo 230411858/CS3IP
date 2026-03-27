@@ -1,6 +1,6 @@
 @extends('layouts.default')
 @section('breadcrumbs')
-    <a href="{{ route('dashboard') }}">Dashboard</a>
+    <a href="{{ route(Auth::user()->type.'.dashboard') }}">Dashboard</a>
     <p>></p>
     <a href="{{ route('settings') }}">Settings</a>
 @endsection

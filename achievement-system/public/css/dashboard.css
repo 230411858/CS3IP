@@ -30,9 +30,9 @@ tr:nth-child(odd)
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    position: absolute;
-    bottom: 6vh;
     width: 100%;
+    margin-top: auto;
+    margin-bottom: 1vh;
     justify-content: space-evenly;
 }
 

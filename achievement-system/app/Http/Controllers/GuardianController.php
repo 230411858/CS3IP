@@ -9,9 +9,15 @@ use Illuminate\Http\Request;
 
 class GuardianController extends Controller
 {
+    public function dashboard()
+    {
+        $guardian = User::find(Auth::id());
+        return view("guardian.dashboard", ['children' => $guardian->children()->with('achievements')->get()]);
+    }
     public function view($child_id)
     {
-        if (($child = User::findOrFail($child_id))->type === 'student' && Auth::user()->children()->get()->contains($child))
+        $guardian = User::find(Auth::id());
+        if (($child = User::findOrFail($child_id))->type === 'student' && $guardian->children()->get()->contains($child))
         {
             return view('guardian.view', ['child' => $child]);
         }
@@ -20,6 +26,7 @@ class GuardianController extends Controller
 
     public function add(Request $request)
     {
+        $guardian = User::find(Auth::id());
         $validated = $request->validate([
             'email' => 'required|exists:users,email',
 
@@ -28,7 +35,7 @@ class GuardianController extends Controller
 
         $child = User::firstWhere('email', '=', $validated['email']);
 
-        if (Auth::user()->children()->get()->contains($child))
+        if ($guardian->children()->get()->contains($child))
         {
             return back()->withErrors('You have already added this child to your account');
         }

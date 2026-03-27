@@ -11,10 +11,15 @@ use App\Models\User;
 use App\Models\Achievement;
 
 use App\Models\StudentsHaveAchievements;
+
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class TeacherController extends Controller
 {
+    public function dashboard()
+    {
+        return view("teacher.dashboard", ['students' => User::where('type', 'student')->get()]);
+    }
     public function showAward(Request $request)
     {
         $students = [];
@@ -42,6 +47,10 @@ class TeacherController extends Controller
             'id' => 'required',
 
             'type' => 'required|in:badge,medal,trophy',
+
+            'primary_colour' => 'required|hex_color',
+
+            'secondary_colour' => 'required|hex_color',
 
             'title' => 'required|string|max:255',
 
@@ -71,6 +80,8 @@ class TeacherController extends Controller
 
         $achievement = Achievement::factory()->create([
             'type' => $validated['type'],
+            'primary_colour' => $validated['primary_colour'],
+            'secondary_colour' => $validated['secondary_colour'],
             'title' => $validated['title'],
             'description' => $validated['description'],
             'teacher_id' => Auth::id()

@@ -50,14 +50,18 @@ Route::middleware('auth')->group(function()
     // Administrator routes
     Route::middleware(EnsureUserHasType::class.':administrator')->group(function()
     {
-        Route::get('/edit/{id}', [AdministratorController::class, 'showEdit'])->name('administrator.edit');
+        Route::get('/administrator/dashboard', [AdministratorController::class, 'dashboard'])->name('administrator.dashboard');
 
-        Route::post('/edit', [AdministratorController::class, 'edit'])->name('administrator.edit.attempt');
+        Route::get('/administrator/edit/{id}', [AdministratorController::class, 'showEdit'])->name('administrator.edit');
+
+        Route::post('/administrator/edit', [AdministratorController::class, 'edit'])->name('administrator.edit.attempt');
     });
 
     // Teacher routes
     Route::middleware(EnsureUserHasType::class.':teacher')->group(function()
     {
+        Route::get('/teacher/dashboard', [TeacherController::class, 'dashboard'])->name('teacher.dashboard');
+
         Route::get('/award', [TeacherController::class, 'showAward'])->name('teacher.award');
 
         Route::post('/award', [TeacherController::class, 'award'])->name('teacher.award.attempt');
@@ -66,17 +70,33 @@ Route::middleware('auth')->group(function()
     // Guardian routes
     Route::middleware(EnsureUserHasType::class.':guardian')->group(function()
     {
-        Route::get('/view/student/{id}', [GuardianController::class, 'view'])->name('guardian.view');
+        Route::get('/guardian/dashboard', [GuardianController::class, 'dashboard'])->name('guardian.dashboard');
 
-        Route::view('/add', 'guardian.add')->name('guardian.add');
+        Route::get('/guardian/view/student/{id}', [GuardianController::class, 'view'])->name('guardian.view');
 
-        Route::post('/add', [GuardianController::class, 'add'])->name('guardian.add.attempt');
+        Route::view('/guardian/add', 'guardian.add')->name('guardian.add');
+
+        Route::post('/guardian/add', [GuardianController::class, 'add'])->name('guardian.add.attempt');
     });
 
     // Student routes
     Route::middleware(EnsureUserHasType::class.':student')->group(function()
     {
-        Route::get('/view/{type}', [StudentController::class, 'viewAchievement'])->name('student.view');
+        Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
+
+        Route::get('/student/achievement/{type}', [StudentController::class, 'achievements'])->name('student.achievements');
+
+        Route::get('/student/friend/achievement/{id}/{type}', [StudentController::class, 'friendsAchievements'])->name('student.friend.achievements');
+
+        Route::post('/student/friend/add', [StudentController::class, 'sendFriendRequest'])->name('student.friend.request');
+
+        Route::post('/student/friend/accept', [StudentController::class, 'acceptFriendRequest'])->name('student.friend.accept');
+
+        Route::post('/student/friend/cancel', [StudentController::class, 'cancelOrRejectFriendRequestOrRemoveFriend'])->name('student.friend.cancel');
+
+        Route::post('/student/friend/reject', [StudentController::class, 'cancelOrRejectFriendRequestOrRemoveFriend'])->name('student.friend.reject');
+
+        Route::post('/student/friend/remove', [StudentController::class, 'cancelOrRejectFriendRequestOrRemoveFriend'])->name('student.friend.remove');
     });
 
 });

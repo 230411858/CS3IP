@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/award.css') }}">
 @endsection
 @section('breadcrumbs')
-    <a href="{{ route('dashboard') }}">Dashboard</a>
+    <a href="{{ route('teacher.dashboard') }}">Dashboard</a>
     <p>></p>
     <a href="{{ route('teacher.award', $students) }}">Award</a>
 @endsection
@@ -52,8 +52,11 @@
         <option value="trophy">Trophy</option>
     </select>
     <br>
-    <p>Colour</p>
-    <input type="color">
+    <p>Primary colour</p>
+    <input type="color" value="#939400" name="primary_colour" required>
+    <br>
+    <p>Secondary colour</p>
+    <input type="color" value="#7a5a00" name="secondary_colour" required>
     <br>
     <p>Award title</p>
     <input type="text" name="title" required>

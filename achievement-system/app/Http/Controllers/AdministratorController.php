@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Hash;
 
 class AdministratorController extends Controller
 {
+    public function dashboard()
+    {
+        return view("administrator.dashboard", ['users' => User::all()]);
+    }
+
     public function showEdit(int $id)
     {
         $user = User::findOrFail($id);

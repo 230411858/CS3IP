@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="css/login_register.css">
 @endsection
 @section('breadcrumbs')
-    <a href="{{ route('dashboard') }}">Dashboard</a>
+    <a href="{{ route('guardian.dashboard') }}">Dashboard</a>
     >
     <a href="{{ route('guardian.add') }}">Add Child</a>
 @endsection

@@ -1,34 +1,50 @@
-@extends('layouts.dashboard')
+@extends('layouts.default')
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/view_achievements.css') }}">
+    @php
+        $rowIndex = 0;
+        $rowOffset = 0;
+    @endphp
+        <style>
+            @for ($achievementNumber = 0; $achievementNumber < $achievements->count(); $achievementNumber++)
+                #achievement{{ $achievementNumber }}
+                {
+                    top: {{ 11 + $rowOffset * 30 }}vh;
+                    left: {{  2.9 + $rowIndex * 24.75 }}vw;
+                }
+                #detail{{ $achievementNumber }}
+                {
+                    top: {{ 9.5 + $rowOffset * 30 }}vh;
+                    left: {{  2.9 + $rowIndex * 24.75 }}vw;
+                }
+                @php
+                    $rowIndex++;
+                    if ($rowIndex == 4) {
+                        $rowIndex = 0;
+                        $rowOffset++;
+                    }
+                @endphp
+            @endfor
+        </style>
+@endsection
+@section('breadcrumbs')
+    <a href="{{ route('student.dashboard') }}">Dashboard</a>
+    <p>></p>
+    <a href="{{ route('student.friend.achievements', [$friend, $type]) }}">{{ $friend->name.'\'s' }} {{ in_array($type, ['badge', 'medal']) ? ucfirst($type).'s' : 'Trophies' }}</a>
+@endsection
 @section('content')
-<h2>My Activity</h2>
-<table>
-    <tr>
-        <th>
-            Preview
-        </th>
-        <th>
-            Award type
-        </th>
-        <th>
-            Title
-        </th>
-        <th>
-            Description
-        </th>
-        <th>
-            Awarded by
-        </th>
-        <th>
-            Awarded at
-        </th>
-    </tr>
-    @foreach ($achievements as $achievement)
-        <tr>
-            <td>
-                @switch($achievement->type)
+@for ($rowsToAdd = $achievements->count() > 36 ? ceil($achievements->count / 4) : 3; $rowsToAdd > 0; $rowsToAdd--)
+    <img class="backgrounds" src={{ asset("storage/images/".$type."_background.png") }} alt="A shelf to hold your earned achievements">
+@endfor
+@php
+    $achievementNumber = 0;
+@endphp
+@foreach ($achievements as $achievement)
+    @switch($achievement->type)
                     @case('badge')
                     <svg
-                    class="preview"
+                    class="achievements"
+                    id="achievement{{ $achievementNumber }}"
                     width="90.858253mm"
                     height="85.176521mm"
                     viewBox="0 0 90.858253 85.176521"
@@ -116,7 +132,8 @@
                     @break
                     @case('medal')
                     <svg
-                    class="preview"
+                    class="achievements"
+                    id="achievement{{ $achievementNumber }}"
                     width="144.10956mm"
                     height="155.06825mm"
                     viewBox="0 0 144.10955 155.06825"
@@ -188,7 +205,8 @@
                     @break
                     @case('trophy')
                         <svg 
-                        class="preview"
+                        class="achievements"
+                        id="achievement{{ $achievementNumber }}"
                         style="color: {{ $achievement->colour }};"
                         width="168.0472mm"
                         height="156.24725mm"
@@ -282,115 +300,22 @@
                         </svg>
                     @break
                 @endswitch
-            </td>
-            <td>
-                {{ ucfirst($achievement->type) }}
-            </td>
-            <td>
-                {{ $achievement->title }}
-            </td>
-            <td>
-                {{ $achievement->description === null ? '[No description]' : $achievement->description }}
-            </td>
-            <td>
-                {{ $achievement->teacher->name }}
-            </td>
-            <td>
-                {{ $achievement->created_at }}
-            </td>
-        </tr>
-    @endforeach
-</table>
-<h2>My Friends</h2>
-<h4>Add a friend:</h4>
-<form method="POST" action="{{ route('student.friend.request') }}">
-    @csrf
-    <input type="email" name="email" required placeholder="Student's Email Address">
-    <button type="submit">Send</button>
-</form>
-<table>
-    <tr>
-        <th>
-            Name
-        </th>
-        <th>
-            View
-        </th>
-        <th>
-            Friends Since
-        </th>
-        <th>
-            Accept/Cancel/Remove
-        </th>
-    </tr>
-    @foreach ($friends as $friend)
-        <tr>
-            <td>
-                {{ $friend->name }}
-            </td>
-            <td>
-                @if ($friend->pending)
-                    @if ($friend->isSender)
-                        <p>This student has sent you a friend request, you can view each other's achievements if you choose to accept</p>
-                    @else
-                        <p>You have sent this student a friend request, you will be able to view each other's achievements if they accept</p>
-                    @endif
-                @else
-                    <a href="{{ route('student.friend.achievements', [$friend->id, 'badge']) }}">Badges</a>
-                    <a href="{{ route('student.friend.achievements', [$friend->id, 'medal']) }}">Medals</a>
-                    <a href="{{ route('student.friend.achievements', [$friend->id, 'trophy']) }}">Trophies</a>
-                @endif
-            </td>
-            <td>
-                @if ($friend->pending)
-                    <p>You {{ $friend->isSender ? 'received' : 'sent' }} this request on {{ $friend->requestCreatedAt }}</p>
-                @else
-                    {{ $friend->since }}
-                @endif
-            </td>
-            <td>
-                @if ($friend->pending)
-                    @if ($friend->isSender)
-                        <form method="POST" action="{{ route('student.friend.accept') }}">
-                        @csrf
-                        <input type="text" name="id" hidden readonly value="{{ $friend->id }}">
-                            <button type="submit">
-                                Accept
-                            </button>
-                        </form>
-                        <form method="POST" action="{{ route('student.friend.reject') }}">
-                        @csrf
-                            <input type="text" name="id" hidden readonly value="{{ $friend->id }}">
-                            <button type="submit">
-                                Reject
-                            </button>
-                        </form>
-                    @else
-                        <form method="POST" action="{{ route('student.friend.cancel') }}">
-                        @csrf
-                            <input type="text" name="id" hidden readonly value="{{ $friend->id }}">
-                            <button type="submit">
-                                Cancel
-                            </button>
-                        </form>
-                    @endif
-                @else
-                    <form method="POST" action="{{ route('student.friend.remove') }}">
-                    @csrf
-                        <input type="text" name="id" hidden readonly value="{{ $friend->id }}">
-                        <button type="submit">
-                            Remove
-                        </button>
-                    </form>
-                @endif
-            </td>
-        </tr>
-    @endforeach
-</table>
-<img src="" alt="">
-<div id="achievementLinks">
-    <a href="{{ route('student.achievements', 'badge') }}">My Badges</a>
-    <a href="{{ route('student.achievements', 'medal') }}">My Medals</a>
-    <a href="{{ route('student.achievements', 'trophy') }}">My Trophies</a>
-</div>
+    <div class="details" id="detail{{ $achievementNumber }}">
+        <h3> {{ $achievement->title }}</h3>
+        <br>
+        <p>{{ $achievement->description === null ? '[No description]' : $achievement->description }}</p>
+        <br>
+        <p>Received: {{ $achievement->created_at }}</p>
+        <p>From: {{ $achievement->teacher->name }}</p>
+        <br>
+        <i>{{ $achievement->rarity() * 100 }}% of students have this achievement</i>
+        @if ($myAchievements->where('achievement_id', '=', $achievement->id)->exists())
+            <br>
+            <p class="sameAchievementAsFriend">You also have this achievement</p>
+        @endif
+    </div>
+    @php
+        $achievementNumber++;
+    @endphp
+@endforeach
 @endsection

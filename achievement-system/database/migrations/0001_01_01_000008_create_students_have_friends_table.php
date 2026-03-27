@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('students_have_guardians', function (Blueprint $table) {
+        Schema::create('students_have_friends', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained(table:'users', column:'id')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('guardian_id')->constrained(table:'users', column:'id')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('friend_id')->constrained(table:'users', column:'id')->onUpdate('cascade')->onDelete('cascade');
+            $table->boolean('pending')->default(true);
             $table->timestamps();
-            $table->unique(['student_id', 'guardian_id']);
+            $table->unique(['student_id', 'friend_id']);
         });
     }
 
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('students_have_guardians');
+        Schema::dropIfExists('students_have_friends');
     }
 };

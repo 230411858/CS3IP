@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
 
 use function Pest\Laravel\session;
 
@@ -21,19 +20,7 @@ class UserController extends Controller
 {
     public function dashboard()
     {
-        $user = User::find(Auth::id());
-        switch ($type = $user->type)
-        {
-            case 'administrator':
-                return view("administrator.dashboard", ['users' => User::all()]);
-            case 'teacher':
-                return view("teacher.dashboard", ['students' => User::where('type', 'student')->get()]);
-            case 'guardian':
-                return view("guardian.dashboard", ['children' => $user->children()->with('achievements')->get()]);
-            case 'student':
-                return view("student.dashboard", ['achievements' => $user->achievements()->orderByDesc('created_at')->get(), 'guardians' => $user->guardians()->get()]);
-        }
-        return back()->withErrors('Could not find corresponding dashboard for user with type '. $type);
+        return redirect()->route(Auth::user()->type.'.dashboard');
     }
     
     public function updateEmail(Request $request)

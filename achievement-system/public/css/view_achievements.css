@@ -45,3 +45,8 @@ main
     text-align: center;
     padding-top: 1vh;
 }
+
+.sameAchievementAsFriend
+{
+    color: lightgreen;
+}

@@ -1,6 +1,6 @@
 @extends('layouts.default')
 @section('breadcrumbs')
-    <a href="{{ route('dashboard') }}">Dashboard</a>
+    <a href="{{ route('guardian.dashboard') }}">Dashboard</a>
     <p>></p>
     <a href="{{ route('guardian.view', $child->id) }}">View Child</a>
 @endsection

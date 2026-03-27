@@ -4,10 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\UserType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -53,21 +51,45 @@ class User extends Authenticatable
 
     public function classrooms(): BelongsToMany
     {
-        return $this->belongsToMany(Classroom::class, 'users_have_classrooms', 'user_id', 'classroom_id');
+        return $this->belongsToMany(Classroom::class, 'users_have_classrooms', 'user_id', 'classroom_id')->withTimestamps();
     }
 
     public function achievements(): BelongsToMany
     {
-        return $this->belongsToMany(Achievement::class, 'students_have_achievements', 'student_id', 'achievement_id');
+        return $this->belongsToMany(Achievement::class, 'students_have_achievements', 'student_id', 'achievement_id')->withTimestamps();
     }
 
     public function guardians(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'students_have_guardians', 'student_id', 'guardian_id');
+        return $this->belongsToMany(User::class, 'students_have_guardians', 'student_id', 'guardian_id')->withTimestamps();
     }
 
     public function children(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'students_have_guardians', 'guardian_id', 'student_id');
+        return $this->belongsToMany(User::class, 'students_have_guardians', 'guardian_id', 'student_id')->withTimestamps();
+    }
+
+    public function friends()
+    {
+        $friends = [];
+        $rows = StudentsHaveFriends::where('student_id', '=', $this->id)->orWhere('friend_id', '=', $this->id)->get();
+        foreach ($rows as $row)
+        {
+            if ($row->student_id === $this->id) 
+            { 
+                $friend = User::find($row->friend_id);
+                $friend->isSender = false;
+            }
+            else
+            {
+                $friend = User::find($row->student_id);
+                $friend->isSender = true;
+            }
+            $friend->pending = $row->pending;
+            $friend->requestCreatedAt = $row->created_at;
+            $friend->since = $friend->pending ? null : $row->updated_at;
+            $friends[] = $friend;  
+        }
+        return collect($friends);
     }
 }
