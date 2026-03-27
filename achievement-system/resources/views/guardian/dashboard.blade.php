@@ -16,6 +16,9 @@
             <th>
                 Date of Last Achievement
             </th>
+            <th>
+                View
+            </th>
         </tr>
         @foreach ($children as $child)
             <tr>

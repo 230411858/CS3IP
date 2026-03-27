@@ -15,6 +15,9 @@
             <th>
                 Account Type
             </th>
+            <th>
+                Edit
+            </th>
         </tr>
         @foreach ($users as $user)
         <tr>

@@ -1,4 +1,7 @@
 @extends('layouts.default')
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+@endsection
 @section('breadcrumbs')
     <a href="{{ route('guardian.dashboard') }}">Dashboard</a>
     <p>></p>
