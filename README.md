@@ -47,5 +47,3 @@ services:
       timeout: 5s
       retries: 3
 ```
-
-`ACHIEVEMENT_SYSTEM_LOCAL_IP` should be set to the local IPv4 address of the host, on most Linux distributions this can be found using `ip a`, on Windows use `ifconfig`
